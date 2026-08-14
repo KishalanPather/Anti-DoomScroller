@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import FamilyControls
+
 
 struct ContentView: View {
     let blockingService = BlockingService()
     //@State private var isBlocking = false
+    @State var selection = FamilyActivitySelection()
+    @State private var showingPicker = false
     
     var body: some View {
         VStack{
@@ -26,9 +30,16 @@ struct ContentView: View {
             Button("Authorize") {
                 Task {
                     await blockingService.requestAuthorization()
+                    showingPicker = true
                     }
                 }
+                .familyActivityPicker(
+                    isPresented: $showingPicker,
+                    selection: $selection
+                )
+                .buttonStyle(.bordered)
             }
+        
                 
             
         }
