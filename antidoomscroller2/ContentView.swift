@@ -25,10 +25,7 @@ struct ContentView: View {
             
             Button("Authorize") {
                 Task {
-                    do {
-                        try await blockingService.requestAuthorization()
-                    } catch {
-                        print(error)
+                    await blockingService.requestAuthorization()
                     }
                 }
             }
@@ -37,7 +34,7 @@ struct ContentView: View {
         }
        
     }
-}
+
 
 #Preview {
     ContentView()

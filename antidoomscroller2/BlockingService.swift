@@ -7,6 +7,7 @@
 
 import FamilyControls
 import ManagedSettings
+import Foundation
 
 final class BlockingService {
 
@@ -19,9 +20,13 @@ final class BlockingService {
         // Stop blocking
     }
     
-    func requestAuthorization() async throws {
-            try await AuthorizationCenter.shared.requestAuthorization(
-                for: .individual    
-            )
+    func requestAuthorization() async {
+        let center = AuthorizationCenter.shared
+        do {
+            try await center.requestAuthorization(for: .individual)
+            print("Authorisation successful")
+        } catch {
+            print ("Authorisation failed \(error)")
+        }
         }
 }
