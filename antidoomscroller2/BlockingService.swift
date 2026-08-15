@@ -7,6 +7,7 @@
 
 import FamilyControls
 import ManagedSettings
+import DeviceActivity
 import Foundation
 
 final class BlockingService {
@@ -15,12 +16,14 @@ final class BlockingService {
     func startBlocking(selection: FamilyActivitySelection) {
         print("App blocked.")
         store.shield.applications = selection.applicationTokens
-        
+        store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy.specific(selection.categoryTokens)
     }
 
     func stopBlocking() {
         print("App unblocked.")
         store.shield.applications = nil
+        store.shield.applicationCategories = nil
+        
     }
     
     func requestAuthorization() async {
