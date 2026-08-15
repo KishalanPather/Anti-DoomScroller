@@ -14,14 +14,11 @@ extension FamilyActivitySelection{
     
     func saveToAppGroup(){
         let encoder = JSONEncoder()
-        
-        do {
-            let data = try encoder.encode(self)
+        if let data = try? encoder.encode(self){
             let sharedDefaults = UserDefaults(suiteName: appGroupID)
             sharedDefaults?.set(data,forKey: key)
-            print("Successfully saved selection to App group.")
-        } catch {
-            print("Failed to save encode selection \(error)")
+            print("Successfully saved selection to App Group.")
         }
+        print("Unable to save selection to App Group.")
     }
 }

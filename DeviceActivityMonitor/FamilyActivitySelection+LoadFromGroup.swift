@@ -18,12 +18,11 @@ extension FamilyActivitySelection{
         
         if let savedData = sharedDefaults?.data(forKey: key){
             let decoder = JSONDecoder()
-            
-            if let decodedSelection = try? decoder.decode(FamilyActivitySelection.self, from: savedData){
-                return decodedSelection
-            }
+            let decodedSelection = try? decoder.decode(FamilyActivitySelection.self, from: savedData)
+            print("Successfully decoded selection.")
+            return decodedSelection
         }
-        
+        print("Unable to decode selection")
         return nil
     }
 }
