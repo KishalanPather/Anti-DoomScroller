@@ -11,7 +11,7 @@ import FamilyControls
 
 struct ContentView: View {
     let blockingService = BlockingService()
-    //@State private var isBlocking = false
+    @State private var isBlocking = false
     @State var selection = FamilyActivitySelection()
     @State private var showingPicker = false
     
@@ -21,13 +21,7 @@ struct ContentView: View {
                  .font(Font.largeTitle)
                  
             
-            Button("Block"){
-                print("Block button pressed")
-                blockingService.startBlocking()
-            }
-                .buttonStyle(.borderedProminent)
-            
-            Button("Authorize") {
+            Button("Choose Apps") {
                 Task {
                     await blockingService.requestAuthorization()
                     showingPicker = true
@@ -39,9 +33,18 @@ struct ContentView: View {
                 )
                 .buttonStyle(.bordered)
             
-            Button("Test blocking"){
-                blockingService.testBlockingOn(selection: selection)
+            Button(isBlocking ? "Unblock" : "Block"){
+                if (!isBlocking){
+                    blockingService.startBlocking(selection:selection)
+                    isBlocking = true
+                } else{
+                    blockingService.stopBlocking()
+                    isBlocking = false
+                }
+                
             }
+                .buttonStyle(.borderedProminent)
+            
             }
         
                 
@@ -51,6 +54,4 @@ struct ContentView: View {
     }
 
 
-#Preview {
-    ContentView()
-}
+//#Preview {  ContentView() }

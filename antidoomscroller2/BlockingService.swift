@@ -12,13 +12,15 @@ import Foundation
 final class BlockingService {
     let store = ManagedSettingsStore()
 
-    func startBlocking() {
-        // Start blocking
-        print("App has initiated blocking")
+    func startBlocking(selection: FamilyActivitySelection) {
+        print("App blocked.")
+        store.shield.applications = selection.applicationTokens
+        
     }
 
     func stopBlocking() {
-        // Stop blocking
+        print("App unblocked.")
+        store.shield.applications = nil
     }
     
     func requestAuthorization() async {
@@ -31,11 +33,5 @@ final class BlockingService {
             }
         }
     
-    func testBlockingOn(selection: FamilyActivitySelection){
-        store.shield.applications = selection.applicationTokens
-    }
     
-    func testBlockingOff(){
-        store.shield.applications = nil
-    }
 }
