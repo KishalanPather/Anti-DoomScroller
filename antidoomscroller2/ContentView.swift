@@ -38,6 +38,10 @@ struct ContentView: View {
                     selection: $selection
                 )
                 .buttonStyle(.bordered)
+            
+            Button("Test blocking"){
+                blockingService.testBlockingOn(selection: selection)
+            }
             }
         
                 

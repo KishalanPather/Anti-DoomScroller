@@ -10,6 +10,7 @@ import ManagedSettings
 import Foundation
 
 final class BlockingService {
+    let store = ManagedSettingsStore()
 
     func startBlocking() {
         // Start blocking
@@ -27,6 +28,14 @@ final class BlockingService {
             print("Authorisation successful")
         } catch {
             print ("Authorisation failed \(error)")
+            }
         }
-        }
+    
+    func testBlockingOn(selection: FamilyActivitySelection){
+        store.shield.applications = selection.applicationTokens
+    }
+    
+    func testBlockingOff(){
+        store.shield.applications = nil
+    }
 }
