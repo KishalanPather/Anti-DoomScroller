@@ -53,7 +53,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				BlockingService.swift,
-				"FamilyActivitySelection+SaveToGroup.swift",
+				"FamilyActivitySelection+SaveAndLoadGroup.swift",
 			);
 			target = 1CB0E702302E45A100603914 /* DeviceActivityMonitor */;
 		};
