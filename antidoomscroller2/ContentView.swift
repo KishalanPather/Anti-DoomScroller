@@ -36,10 +36,9 @@ struct ContentView: View {
             
             Button(isBlocking ? "Unblock" : "Block"){
                 if (!isBlocking){
-                    //blockingService.startBlocking(selection:selection)
                     monitoringService.startMonitoring(selection:selection)
                     isBlocking = true
-                } else{
+                } else{ 
                     blockingService.stopBlocking()
                     isBlocking = false
                 }

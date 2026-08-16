@@ -49,11 +49,22 @@
 			);
 			target = 1CB0E702302E45A100603914 /* DeviceActivityMonitor */;
 		};
+		1CFE445E3032460A008FFC91 /* Exceptions for "antidoomscroller2" folder in "DeviceActivityMonitor" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				BlockingService.swift,
+				"FamilyActivitySelection+SaveToGroup.swift",
+			);
+			target = 1CB0E702302E45A100603914 /* DeviceActivityMonitor */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		1CB0E6F2302E43DF00603914 /* antidoomscroller2 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				1CFE445E3032460A008FFC91 /* Exceptions for "antidoomscroller2" folder in "DeviceActivityMonitor" target */,
+			);
 			path = antidoomscroller2;
 			sourceTree = "<group>";
 		};

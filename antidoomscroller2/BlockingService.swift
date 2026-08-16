@@ -13,17 +13,21 @@ import Foundation
 final class BlockingService {
     let store = ManagedSettingsStore()
 
-    func startBlocking(selection: FamilyActivitySelection) {
-        print("App blocked.")
-        store.shield.applications = selection.applicationTokens
-        store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy.specific(selection.categoryTokens)
+    func startBlocking() {
+        if let selection = FamilyActivitySelection.loadFromAppGroup(){
+            store.shield.applications = selection.applicationTokens
+            store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy.specific(selection.categoryTokens)
+            print("Blocking successfully applied")
+        } else{
+            print("No apps to be blocked.")
+        }
     }
 
     func stopBlocking() {
         //store.shield.applications = nil
         //store.shield.applicationCategories = nil
         store.clearAllSettings()
-        print("App unblocked.")
+        print("Blocking removed.")
         
     }
     

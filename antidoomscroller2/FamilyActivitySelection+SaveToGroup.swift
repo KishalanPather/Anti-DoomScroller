@@ -21,6 +21,18 @@ extension FamilyActivitySelection{
         } else{
             print("Unable to save selection to App Group.")
         }
+    }
+    
+    static func loadFromAppGroup() -> FamilyActivitySelection? {
+        let sharedDefaults = UserDefaults(suiteName: appGroupID)
         
+        if let savedData = sharedDefaults?.data(forKey: key){
+            let decoder = JSONDecoder()
+            let decodedSelection = try? decoder.decode(FamilyActivitySelection.self, from: savedData)
+            print("Successfully decoded selection.")
+            return decodedSelection
+        }
+        print("Unable to decode selection")
+        return nil
     }
 }
