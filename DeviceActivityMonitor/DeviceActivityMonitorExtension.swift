@@ -6,10 +6,15 @@
 //
 
 import DeviceActivity
+import FamilyControls
+import ManagedSettings
 
 // Optionally override any of the functions below.
 // Make sure that your class name matches the NSExtensionPrincipalClass in your Info.plist.
 class DeviceActivityMonitorExtension: DeviceActivityMonitor {
+    let store = ManagedSettingsStore()
+    
+    
     override func intervalDidStart(for activity: DeviceActivityName) {
         super.intervalDidStart(for: activity)
         
@@ -25,7 +30,15 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     override func eventDidReachThreshold(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
         super.eventDidReachThreshold(event, activity: activity)
         
-        // Handle the event reaching its threshold.
+        if event == DeviceActivityEvent.Name("HitOneMinute"){
+            if let savedSelection = FamilyActivitySelection.loadFromAppGroup(){
+                store.shield.applications = savedSelection.applicationTokens
+                store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy.specific(savedSelection.categoryTokens)
+                
+                print("1 minute reached! Shields applied.")
+            }
+            
+        }
     }
     
     override func intervalWillStartWarning(for activity: DeviceActivityName) {

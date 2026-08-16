@@ -18,7 +18,9 @@ extension FamilyActivitySelection{
             let sharedDefaults = UserDefaults(suiteName: appGroupID)
             sharedDefaults?.set(data,forKey: key)
             print("Successfully saved selection to App Group.")
+        } else{
+            print("Unable to save selection to App Group.")
         }
-        print("Unable to save selection to App Group.")
+        
     }
 }

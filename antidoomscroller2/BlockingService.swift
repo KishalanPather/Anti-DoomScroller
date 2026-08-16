@@ -20,9 +20,10 @@ final class BlockingService {
     }
 
     func stopBlocking() {
+        //store.shield.applications = nil
+        //store.shield.applicationCategories = nil
+        store.clearAllSettings()
         print("App unblocked.")
-        store.shield.applications = nil
-        store.shield.applicationCategories = nil
         
     }
     

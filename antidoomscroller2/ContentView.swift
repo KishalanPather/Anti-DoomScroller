@@ -11,6 +11,7 @@ import FamilyControls
 
 struct ContentView: View {
     let blockingService = BlockingService()
+    let monitoringService = MonitoringService()
     @State private var isBlocking = false
     @State var selection = FamilyActivitySelection()
     @State private var showingPicker = false
@@ -35,7 +36,8 @@ struct ContentView: View {
             
             Button(isBlocking ? "Unblock" : "Block"){
                 if (!isBlocking){
-                    blockingService.startBlocking(selection:selection)
+                    //blockingService.startBlocking(selection:selection)
+                    monitoringService.startMonitoring(selection:selection)
                     isBlocking = true
                 } else{
                     blockingService.stopBlocking()
@@ -54,4 +56,4 @@ struct ContentView: View {
     }
 
 
-//#Preview {  ContentView() }
+#Preview {  ContentView() }
