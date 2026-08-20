@@ -10,10 +10,16 @@ import FamilyControls
 
 
 struct ContentView: View {
+    @State private var authorisationManager = AuthorisationManager()
 
     var body: some View {
         VStack{
-           ConfigureBlockingView()
+            if authorisationManager.checkAuthorisation(){
+                ConfigureBlockingView()
+            }else {
+                AuthorisationView()
+                    .environment(authorisationManager)
+                }
             }
             
         }

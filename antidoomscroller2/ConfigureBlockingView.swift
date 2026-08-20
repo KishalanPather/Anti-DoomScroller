@@ -20,7 +20,7 @@ struct ConfigureBlockingView: View{
     
     var body: some View {
         VStack{
-            
+            Text("Configure blocking page")
         }
         
     
