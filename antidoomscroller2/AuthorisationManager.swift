@@ -29,15 +29,16 @@ class AuthorisationManager{
             print("Undefined authorisation statement received.")
         }
         return isAuthorised
-        
     }
     
     
     func requestAuthorisation() async {
         do {
             try await center.requestAuthorization(for: .individual)
+            isAuthorised = checkAuthorisation()
             print("Authorisation successful")
         } catch {
+            isAuthorised = checkAuthorisation()
             print ("Authorisation failed \(error)")
             }
         }
