@@ -13,7 +13,18 @@ import Foundation
 final class BlockingService {
     let store = ManagedSettingsStore()
 
-    func startBlocking() {
+    
+    func requestAuthorization() async {
+        let center = AuthorizationCenter.shared
+        do {
+            try await center.requestAuthorization(for: .individual)
+            print("Authorisation successful")
+        } catch {
+            print ("Authorisation failed \(error)")
+            }
+        }
+    
+    /*func startBlocking() {
         if let selection = FamilyActivitySelection.loadFromAppGroup(){
             store.shield.applications = selection.applicationTokens
             store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy.specific(selection.categoryTokens)
@@ -30,16 +41,5 @@ final class BlockingService {
         print("Blocking removed.")
         
     }
-    
-    func requestAuthorization() async {
-        let center = AuthorizationCenter.shared
-        do {
-            try await center.requestAuthorization(for: .individual)
-            print("Authorisation successful")
-        } catch {
-            print ("Authorisation failed \(error)")
-            }
-        }
-    
-    
+    */
 }
