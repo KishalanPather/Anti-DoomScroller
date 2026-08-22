@@ -22,7 +22,6 @@ final class AppGroupStateStore {
     }
     
     
-    
     init() {
             guard let defaults = UserDefaults(suiteName: appGroupID)
         else {
@@ -56,7 +55,7 @@ final class AppGroupStateStore {
     }
     
     
-    func setAppState(appState: AppState){
+    func setAppState(_ appState: AppState){
         defaults.set(appState.rawValue, forKey: Keys.appState)
     }
     
@@ -91,8 +90,6 @@ final class AppGroupStateStore {
     func getRestrictionEndsAt() -> Int {
         return defaults.integer(forKey: Keys.restrictionEndsAt)
     }
-    
-    
     
     
 }

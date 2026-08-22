@@ -64,8 +64,12 @@ struct ConfigureBlockingView: View{
         
     }
     private func submitForm(){
+        appGroupStateStore.setSelectedApps(selection)
+        appGroupStateStore.setScrollLimit(scrollLimit)
+        appGroupStateStore.setLockoutPeriod(lockoutPeriod)
+        appGroupStateStore.setAppState(appState)
+        appGroupStateStore.setRestrictionEndsAt(0)
         print("Form submitted")
-        //appGroupStateStore.saveSelectedApps(selection)
     }
     
     
