@@ -10,17 +10,20 @@ import FamilyControls
 
 struct ConfigureBlockingView: View{
     let blockingService = BlockingService()
+    let monitoringService = MonitoringService()
     //let appGroupStateStore = AppGroupStateStore()
     
     
     @State private var showingPicker = false
     @State private var selection = FamilyActivitySelection()
-    //@State private var appState =
-    //@State private var restrictionEndsAt =
+    @State private var appState = AppState.inactive
+    @State private var restrictionEndsAt = false
+    
     
     var body: some View {
         VStack{
             Text("Configure blocking page")
+            
         }
         
     
