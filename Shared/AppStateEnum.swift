@@ -5,8 +5,10 @@
 //  Created by Kishalan Pather on 2026/08/22.
 //
 
- enum AppState {
+enum AppState:String {
     case inactive
     case monitoring
     case restricted
+    
+     
 }

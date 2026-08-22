@@ -17,6 +17,7 @@ final class AppGroupStateStore {
         static let selectedApps = "selectedApps"
         static let scrollLimit = "scrollLimit"
         static let lockoutPeriod = "lockoutPeriod"
+        static let appState = "appState"
         static let restrictionEndsAt = "restrictionEndsAt"
     }
     
@@ -56,12 +57,16 @@ final class AppGroupStateStore {
     
     
     func setAppState(appState: AppState){
-        
+        defaults.set(appState.rawValue, forKey: Keys.appState)
     }
     
-    let test: AppState
         
-    func getAppState(){}
+    func getAppState() -> AppState? {
+        guard let rawValue = defaults.string(forKey: Keys.appState) else {
+                return nil
+            }
+            return AppState(rawValue: rawValue)
+    }
         
     func setScrollLimit (_ minutes: Int){
         defaults.set(minutes, forKey: Keys.scrollLimit)
