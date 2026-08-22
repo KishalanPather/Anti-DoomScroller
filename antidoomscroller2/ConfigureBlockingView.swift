@@ -9,6 +9,7 @@ import SwiftUI
 import FamilyControls
 
 struct ConfigureBlockingView: View{
+    @Environment(\.dismiss) var dismiss //allows the view to be dismissed when form is submitted
     let monitoringService = MonitoringService()
     let appGroupStateStore = AppGroupStateStore()
     
@@ -70,7 +71,11 @@ struct ConfigureBlockingView: View{
         appGroupStateStore.setAppState(appState)
         appGroupStateStore.setRestrictionEndsAt(0)
         print("Form submitted")
+        dismiss()
     }
+    
+
+    
     
     
 }
