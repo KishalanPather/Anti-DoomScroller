@@ -15,7 +15,7 @@ struct ContentView: View {
     var body: some View {
         VStack{
             if authorisationManager.checkAuthorisation(){
-                ConfigureBlockingView()
+                MainView()
             }else {
                 AuthorisationView()
                     .environment(authorisationManager)

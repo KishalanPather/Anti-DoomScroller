@@ -9,10 +9,8 @@ import SwiftUI
 import FamilyControls
 
 struct ConfigureBlockingView: View{
-    @Environment(\.dismiss) var dismiss //allows the view to be dismissed when form is submitted
-    let monitoringService = MonitoringService()
+    @Environment(\.dismiss) var dismiss //allows the view to be dismissed when form is submitted. Swift does it automatically.
     let appGroupStateStore = AppGroupStateStore()
-    
     
     @State private var showingPicker = false
     @State private var appState = AppState.inactive
@@ -22,18 +20,20 @@ struct ConfigureBlockingView: View{
     @State private var scrollLimit = 0
     @State private var lockoutPeriod = 0
     
+    private func submitForm(){
+        appGroupStateStore.setSelectedApps(selection)
+        appGroupStateStore.setScrollLimit(scrollLimit)
+        appGroupStateStore.setLockoutPeriod(lockoutPeriod)
+        appGroupStateStore.setAppState(appState)
+        appGroupStateStore.setRestrictionEndsAt(0)
+        print("Form submitted")
+        dismiss()
+    }
+    
     
     var body: some View {
         VStack{
             Text("Configure blocking page")
-            
-            if appState == .inactive{
-                Text("State: Inactive")
-            } else if appState == .monitoring {
-                Text("State: Monitoring")
-            }else if appState == .restricted {
-                Text("State: Restricted")
-            }
             
             Form{
                 Section(header:Text("Select offending apps")){
@@ -64,19 +64,6 @@ struct ConfigureBlockingView: View{
         
         
     }
-    private func submitForm(){
-        appGroupStateStore.setSelectedApps(selection)
-        appGroupStateStore.setScrollLimit(scrollLimit)
-        appGroupStateStore.setLockoutPeriod(lockoutPeriod)
-        appGroupStateStore.setAppState(appState)
-        appGroupStateStore.setRestrictionEndsAt(0)
-        print("Form submitted")
-        dismiss()
-    }
-    
-
-    
-    
     
 }
 
