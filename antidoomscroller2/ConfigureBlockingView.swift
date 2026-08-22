@@ -9,9 +9,8 @@ import SwiftUI
 import FamilyControls
 
 struct ConfigureBlockingView: View{
-    let blockingService = BlockingService()
     let monitoringService = MonitoringService()
-    //let appGroupStateStore = AppGroupStateStore()
+    let appGroupStateStore = AppGroupStateStore()
     
     
     @State private var showingPicker = false
@@ -20,7 +19,7 @@ struct ConfigureBlockingView: View{
     
     @State private var selection = FamilyActivitySelection()
     @State private var scrollLimit = 0
-    @State private var lockoutPeriod = 5
+    @State private var lockoutPeriod = 0
     
     
     var body: some View {
