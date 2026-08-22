@@ -14,16 +14,6 @@ final class BlockingService {
     let store = ManagedSettingsStore()
 
     
-    func requestAuthorization() async {
-        let center = AuthorizationCenter.shared
-        do {
-            try await center.requestAuthorization(for: .individual)
-            print("Authorisation successful")
-        } catch {
-            print ("Authorisation failed \(error)")
-            }
-        }
-    
     /*func startBlocking() {
         if let selection = FamilyActivitySelection.loadFromAppGroup(){
             store.shield.applications = selection.applicationTokens
