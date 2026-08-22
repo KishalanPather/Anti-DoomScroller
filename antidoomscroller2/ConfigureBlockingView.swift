@@ -65,6 +65,7 @@ struct ConfigureBlockingView: View{
     }
     private func submitForm(){
         print("Form submitted")
+        //appGroupStateStore.saveSelectedApps(selection)
     }
     
     

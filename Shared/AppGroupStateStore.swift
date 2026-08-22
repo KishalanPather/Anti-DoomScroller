@@ -11,9 +11,13 @@ import FamilyControls
 final class AppGroupStateStore {
     private let appGroupID = "group.com.kishalan.antidoomscroller2"
     private let defaults:UserDefaults
+    let blockingService = BlockingService()
     
     private enum Keys{
-            static let selectedApps = "selectedApps"
+        static let selectedApps = "selectedApps"
+        static let scrollLimit = "scrollLimit"
+        static let lockoutPeriod = "lockoutPeriod"
+        static let restrictionEndsAt = "restrictionEndsAt"
     }
     
     
@@ -27,7 +31,7 @@ final class AppGroupStateStore {
         }
     
     
-    func saveSelectedApps(_ selection:FamilyActivitySelection){
+    func setSelectedApps(_ selection:FamilyActivitySelection){
         do{
             let data = try JSONEncoder().encode(selection)
             defaults.set(data, forKey: Keys.selectedApps)
@@ -50,21 +54,38 @@ final class AppGroupStateStore {
             }
     }
     
-    func saveAppState(){}
+    
+    func setAppState(appState: AppState){
+        
+    }
+    
+    let test: AppState
         
     func getAppState(){}
         
-    func saveScrollLimit (){}
+    func setScrollLimit (_ minutes: Int){
+        defaults.set(minutes, forKey: Keys.scrollLimit)
+    }
         
-    func getScrollLimit(){}
+    func getScrollLimit() -> Int {
+        return defaults.integer(forKey: Keys.scrollLimit)
+    }
         
-    func setLockoutPeriod(){}
+    func setLockoutPeriod(_ lockOutPeriod: Int){
+        defaults.set(lockOutPeriod, forKey: Keys.lockoutPeriod)
+    }
         
-    func getLockoutPeriod(){}
+    func getLockoutPeriod() -> Int {
+       return defaults.integer(forKey: Keys.scrollLimit)
+    }
         
-    func setRestrictionEndsAt(){}
+    func setRestrictionEndsAt(_ restrictionEnd: Int){
+        defaults.set(restrictionEnd, forKey: Keys.restrictionEndsAt)
+    }
         
-    func getRestrictionEndsAt(){}
+    func getRestrictionEndsAt() -> Int {
+        return defaults.integer(forKey: Keys.restrictionEndsAt)
+    }
     
     
     
