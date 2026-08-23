@@ -31,7 +31,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         super.eventDidReachThreshold(event, activity: activity)
         
         if event == DeviceActivityEvent.Name("HitOneMinute"){
-            blockingService.startBlocking()
+            //blockingService.startBlocking()
             print("1 minute reached! Shields applied.")
         }
     }

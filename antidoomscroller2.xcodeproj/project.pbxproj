@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C6D898B3036CB260045ADAC /* AppGroupStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6D898A3036CB210045ADAC /* AppGroupStateStore.swift */; };
+		1C6D898C3036CB260045ADAC /* AppGroupStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6D898A3036CB210045ADAC /* AppGroupStateStore.swift */; };
 		1CB0E706302E45A100603914 /* DeviceActivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB0E705302E45A100603914 /* DeviceActivity.framework */; };
 		1CB0E70E302E45A100603914 /* DeviceActivityMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1CB0E703302E45A100603914 /* DeviceActivityMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1CFA505D3039BF880045438E /* AppStateEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFA505C3039BF880045438E /* AppStateEnum.swift */; };
+		1CFA505E3039BF880045438E /* AppStateEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFA505C3039BF880045438E /* AppStateEnum.swift */; };
 		1CFE444E30307BAA008FFC91 /* BlockingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFE444A30307BAA008FFC91 /* BlockingService.swift */; };
-		1CFE445A30310D69008FFC91 /* FamilyActivitySelection+SaveAndLoadGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFE445830310D4A008FFC91 /* FamilyActivitySelection+SaveAndLoadGroup.swift */; };
 		1CFE445D3032460A008FFC91 /* BlockingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFE444A30307BAA008FFC91 /* BlockingService.swift */; };
-		1CFE446130324940008FFC91 /* FamilyActivitySelection+SaveAndLoadGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFE445830310D4A008FFC91 /* FamilyActivitySelection+SaveAndLoadGroup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,11 +42,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1C6D898A3036CB210045ADAC /* AppGroupStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupStateStore.swift; sourceTree = "<group>"; };
 		1CB0E6F0302E43DF00603914 /* antidoomscroller2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = antidoomscroller2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB0E703302E45A100603914 /* DeviceActivityMonitor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DeviceActivityMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB0E705302E45A100603914 /* DeviceActivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeviceActivity.framework; path = System/Library/Frameworks/DeviceActivity.framework; sourceTree = SDKROOT; };
+		1CFA505C3039BF880045438E /* AppStateEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateEnum.swift; sourceTree = "<group>"; };
 		1CFE444A30307BAA008FFC91 /* BlockingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockingService.swift; sourceTree = "<group>"; };
-		1CFE445830310D4A008FFC91 /* FamilyActivitySelection+SaveAndLoadGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FamilyActivitySelection+SaveAndLoadGroup.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -123,7 +126,8 @@
 		1CFE446230324D98008FFC91 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				1CFE445830310D4A008FFC91 /* FamilyActivitySelection+SaveAndLoadGroup.swift */,
+				1CFA505C3039BF880045438E /* AppStateEnum.swift */,
+				1C6D898A3036CB210045ADAC /* AppGroupStateStore.swift */,
 				1CFE444A30307BAA008FFC91 /* BlockingService.swift */,
 			);
 			path = Shared;
@@ -238,8 +242,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CFE445A30310D69008FFC91 /* FamilyActivitySelection+SaveAndLoadGroup.swift in Sources */,
 				1CFE444E30307BAA008FFC91 /* BlockingService.swift in Sources */,
+				1CFA505E3039BF880045438E /* AppStateEnum.swift in Sources */,
+				1C6D898B3036CB260045ADAC /* AppGroupStateStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,7 +253,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CFE445D3032460A008FFC91 /* BlockingService.swift in Sources */,
-				1CFE446130324940008FFC91 /* FamilyActivitySelection+SaveAndLoadGroup.swift in Sources */,
+				1C6D898C3036CB260045ADAC /* AppGroupStateStore.swift in Sources */,
+				1CFA505D3039BF880045438E /* AppStateEnum.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

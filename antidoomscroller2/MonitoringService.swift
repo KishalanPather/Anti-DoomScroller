@@ -15,7 +15,7 @@ class MonitoringService{
        func startMonitoring(selection: FamilyActivitySelection) {
            
            // 1. Save the selection so the extension can see it later
-               selection.saveToAppGroup()
+               //selection.saveToAppGroup()
                
                let center = DeviceActivityCenter()
                let activityName = DeviceActivityName("DailyAppLimit")
