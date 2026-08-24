@@ -56,7 +56,27 @@ class MonitoringService{
         
     }
     
-    func startMonitorLockoutPeriod(){}
+    func startMonitorLockoutPeriod(){
+        let cooldownPeriod = AppGroupStateStore.shared.getLockoutPeriod()
+        
+        let activityName = DeviceActivityName("LockoutPeriod")
+
+            let now = Calendar.current.dateComponents([.hour, .minute], from: Date())
+            let twoHoursFromNow = Calendar.current.dateComponents([.hour, .minute], from: Date().addingTimeInterval(2 * 3600))
+
+            let schedule = DeviceActivitySchedule(
+                intervalStart: now,
+                intervalEnd: twoHoursFromNow,
+                repeats: false
+            )
+            
+            do {
+            try center.startMonitoring(activityName, during: schedule)
+            print("Lockout Period monitoring started")
+            } catch {
+            print("Failed to start lockout period monitoring: \(error)")
+            }
+    }
 }
     
     
