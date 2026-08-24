@@ -14,7 +14,7 @@ final class BlockingService {
     let store = ManagedSettingsStore()
 
     
-    /*func startBlocking() {
+   /* func startBlocking(selection:FamilyActivitySelection) {
         if let selection = FamilyActivitySelection.loadFromAppGroup(){
             store.shield.applications = selection.applicationTokens
             store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy.specific(selection.categoryTokens)

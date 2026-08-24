@@ -10,7 +10,6 @@ import FamilyControls
 
 struct ConfigureBlockingView: View{
     @Environment(\.dismiss) var dismiss //allows the view to be dismissed when form is submitted. Swift does it automatically.
-    let appGroupStateStore = AppGroupStateStore()
     
     @State private var showingPicker = false
     @State private var appState = AppState.inactive
@@ -21,11 +20,11 @@ struct ConfigureBlockingView: View{
     @State private var lockoutPeriod = 0
     
     private func submitForm(){
-        appGroupStateStore.setSelectedApps(selection)
-        appGroupStateStore.setScrollLimit(scrollLimit)
-        appGroupStateStore.setLockoutPeriod(lockoutPeriod)
-        appGroupStateStore.setAppState(appState)
-        appGroupStateStore.setRestrictionEndsAt(0)
+        AppGroupStateStore.shared.setSelectedApps(selection)
+        AppGroupStateStore.shared.setScrollLimit(scrollLimit)
+        AppGroupStateStore.shared.setLockoutPeriod(lockoutPeriod)
+        AppGroupStateStore.shared.setAppState(appState)
+        AppGroupStateStore.shared.setRestrictionEndsAt(0)
         print("Form submitted")
         dismiss()
     }

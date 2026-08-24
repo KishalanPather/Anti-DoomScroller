@@ -9,9 +9,10 @@ import Foundation
 import FamilyControls
 
 final class AppGroupStateStore {
+    static let shared = AppGroupStateStore()
+    
     private let appGroupID = "group.com.kishalan.antidoomscroller2"
     private let defaults:UserDefaults
-    let blockingService = BlockingService()
     
     private enum Keys{
         static let selectedApps = "selectedApps"
@@ -22,7 +23,7 @@ final class AppGroupStateStore {
     }
     
     
-    init() {
+    private init() {
             guard let defaults = UserDefaults(suiteName: appGroupID)
         else {
                 fatalError("Could not access App Group UserDefaults")
@@ -41,7 +42,7 @@ final class AppGroupStateStore {
         }
     }
     
-    func getSelectedApps() -> FamilyActivitySelection? {
+     func getSelectedApps() -> FamilyActivitySelection? {
         guard let data = defaults.data(forKey: Keys.selectedApps) else {
             return nil
         }

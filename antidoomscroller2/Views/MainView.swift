@@ -11,6 +11,8 @@ struct MainView: View{
     @State private var showingConfigureBlocking = false
     @State private var appState = AppState.inactive //will have to load from appgroup later
     
+    private let monitoringService = MonitoringService()
+    
     var body: some View {
         Text("Main View")
         
@@ -30,7 +32,14 @@ struct MainView: View{
         }
             .buttonStyle(.borderedProminent)
         
-        Button("Activate monitoring"){}
+        Button("Activate monitoring"){
+            monitoringService.startMonitorScrollLimit()
+        }
+            .buttonStyle(.borderedProminent)
+        
+        Button("Stop monitoring (test purposes)"){
+            monitoringService.stopMonitorScrollLimit()
+        }
             .buttonStyle(.borderedProminent)
     }
 }

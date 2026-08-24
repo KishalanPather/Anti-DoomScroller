@@ -12,14 +12,15 @@ import Foundation
 class MonitoringService{
     let center = DeviceActivityCenter()
        
-       func startMonitoring(selection: FamilyActivitySelection) {
+       func startMonitorScrollLimit() {
+           
+           let selection = AppGroupStateStore.shared.getSelectedApps()
+           let scrollLimit = AppGroupStateStore.shared.getScrollLimit()
            
            // 1. Save the selection so the extension can see it later
                //selection.saveToAppGroup()
-               
-               let center = DeviceActivityCenter()
-               let activityName = DeviceActivityName("DailyAppLimit")
-               let eventName = DeviceActivityEvent.Name("HitOneMinute")
+               let activityName = DeviceActivityName("ScrollLimit")
+               let eventName = DeviceActivityEvent.Name("ScrollLimitReached")
                
                // 2. Define the 24-hour window where we track time
                let schedule = DeviceActivitySchedule(
@@ -28,12 +29,12 @@ class MonitoringService{
                    repeats: true
                )
                
-               // 3. Define the actual 1-minute limit tied to their selected apps
+               // 3. Define the actual 5-minute limit tied to their selected apps
                let event = DeviceActivityEvent(
-                   applications: selection.applicationTokens,
-                   categories: selection.categoryTokens,
-                   webDomains: selection.webDomainTokens,
-                   threshold: DateComponents(minute: 1) // 1 minute!
+                applications: selection!.applicationTokens,
+                categories: selection!.categoryTokens,
+                webDomains: selection!.webDomainTokens,
+                   threshold: DateComponents(minute: 5) // 5 minute!
                )
                
                // 4. Start monitoring with BOTH the schedule and the event
@@ -48,6 +49,14 @@ class MonitoringService{
                    print("Error starting monitor: \(error)")
                }
            }
+    
+    func stopMonitorScrollLimit(){
+        center.stopMonitoring()
+        print("All monitoring stopped.")
+        
+    }
+    
+    func startMonitorLockoutPeriod(){}
 }
     
     
