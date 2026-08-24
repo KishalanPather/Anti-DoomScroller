@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1C6D898B3036CB260045ADAC /* AppGroupStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6D898A3036CB210045ADAC /* AppGroupStateStore.swift */; };
 		1C6D898C3036CB260045ADAC /* AppGroupStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6D898A3036CB210045ADAC /* AppGroupStateStore.swift */; };
+		1C993AB5303C0C260094ACAF /* MonitoringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C993AAE303C0C260094ACAF /* MonitoringService.swift */; };
+		1C993ABC303C166E0094ACAF /* MonitoringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C993AAE303C0C260094ACAF /* MonitoringService.swift */; };
 		1CB0E706302E45A100603914 /* DeviceActivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB0E705302E45A100603914 /* DeviceActivity.framework */; };
 		1CB0E70E302E45A100603914 /* DeviceActivityMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1CB0E703302E45A100603914 /* DeviceActivityMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1CFA505D3039BF880045438E /* AppStateEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFA505C3039BF880045438E /* AppStateEnum.swift */; };
@@ -43,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		1C6D898A3036CB210045ADAC /* AppGroupStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupStateStore.swift; sourceTree = "<group>"; };
+		1C993AAE303C0C260094ACAF /* MonitoringService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringService.swift; sourceTree = "<group>"; };
 		1CB0E6F0302E43DF00603914 /* antidoomscroller2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = antidoomscroller2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB0E703302E45A100603914 /* DeviceActivityMonitor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DeviceActivityMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB0E705302E45A100603914 /* DeviceActivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeviceActivity.framework; path = System/Library/Frameworks/DeviceActivity.framework; sourceTree = SDKROOT; };
@@ -129,6 +132,7 @@
 				1CFA505C3039BF880045438E /* AppStateEnum.swift */,
 				1C6D898A3036CB210045ADAC /* AppGroupStateStore.swift */,
 				1CFE444A30307BAA008FFC91 /* BlockingService.swift */,
+				1C993AAE303C0C260094ACAF /* MonitoringService.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -244,6 +248,7 @@
 			files = (
 				1CFE444E30307BAA008FFC91 /* BlockingService.swift in Sources */,
 				1CFA505E3039BF880045438E /* AppStateEnum.swift in Sources */,
+				1C993AB5303C0C260094ACAF /* MonitoringService.swift in Sources */,
 				1C6D898B3036CB260045ADAC /* AppGroupStateStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,6 +260,7 @@
 				1CFE445D3032460A008FFC91 /* BlockingService.swift in Sources */,
 				1C6D898C3036CB260045ADAC /* AppGroupStateStore.swift in Sources */,
 				1CFA505D3039BF880045438E /* AppStateEnum.swift in Sources */,
+				1C993ABC303C166E0094ACAF /* MonitoringService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
