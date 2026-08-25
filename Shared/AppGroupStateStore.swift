@@ -14,7 +14,7 @@ final class AppGroupStateStore {
     private let appGroupID = "group.com.kishalan.antidoomscroller2"
     private let defaults:UserDefaults
     
-    private enum Keys{
+    private enum Keys{          //uses singleton design pattern
         static let selectedApps = "selectedApps"
         static let scrollLimit = "scrollLimit"
         static let lockoutPeriod = "lockoutPeriod"

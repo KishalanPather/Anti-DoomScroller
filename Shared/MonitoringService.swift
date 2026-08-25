@@ -10,9 +10,9 @@ import DeviceActivity
 import Foundation
 
 class MonitoringService{
-    let center = DeviceActivityCenter()
+    static let center = DeviceActivityCenter()
        
-       func startMonitorScrollLimit() {
+       static func startMonitorScrollLimit() {
            
            let selection = AppGroupStateStore.shared.getSelectedApps()
            let scrollLimit = AppGroupStateStore.shared.getScrollLimit()
@@ -50,13 +50,13 @@ class MonitoringService{
                }
            }
     
-    func stopMonitorScrollLimit(){
+    static func stopMonitorScrollLimit(){
         center.stopMonitoring()
         print("All monitoring stopped.")
         
     }
     
-    func startMonitorLockoutPeriod(){
+    static func startMonitorLockoutPeriod(){
         let cooldownPeriod = AppGroupStateStore.shared.getLockoutPeriod()
         
         let activityName = DeviceActivityName("LockoutPeriod")

@@ -14,6 +14,7 @@ import ManagedSettings
 // Make sure that your class name matches the NSExtensionPrincipalClass in your Info.plist.
 class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     let blockingService = BlockingService()
+    let monitoringService = MonitoringService()
     
     override func intervalDidStart(for activity: DeviceActivityName) {
         super.intervalDidStart(for: activity)
