@@ -15,7 +15,7 @@ class MonitoringService{
     private init(){}
     
        static func startMonitorScrollLimit() {
-           
+
            let selection = AppGroupStateStore.shared.getSelectedApps()
            let scrollLimit = AppGroupStateStore.shared.getScrollLimit()
            
@@ -36,7 +36,7 @@ class MonitoringService{
                 applications: selection!.applicationTokens,
                 categories: selection!.categoryTokens,
                 webDomains: selection!.webDomainTokens,
-                   threshold: DateComponents(minute: 5) // 5 minute!
+                threshold: DateComponents(second: 1) // 5 minute! using 1 min for testing purposes
                )
                
                // 4. Start monitoring with BOTH the schedule and the event
@@ -46,9 +46,9 @@ class MonitoringService{
                        during: schedule,
                        events: [eventName: event] // Pass the event here!
                    )
-                   print("Monitoring started!")
+                   print("Scroll limit monitoring started.")
                } catch {
-                   print("Error starting monitor: \(error)")
+                   print("Error starting scroll limit monitoring. Error: \(error)")
                }
            }
     
@@ -60,24 +60,26 @@ class MonitoringService{
     
     static func startMonitorLockoutPeriod(){
         let cooldownPeriod = AppGroupStateStore.shared.getLockoutPeriod()
-        
         let activityName = DeviceActivityName("LockoutPeriod")
+        
+        let now = Date()
+        let endPeriod = Date().addingTimeInterval(120) //setting is to 2 min for testing purposes
 
-            let now = Calendar.current.dateComponents([.hour, .minute], from: Date())
-            let twoHoursFromNow = Calendar.current.dateComponents([.hour, .minute], from: Date().addingTimeInterval(2 * 3600))
+        let startComponent = Calendar.current.dateComponents([.hour, .minute], from: now)
+        let endComponent = Calendar.current.dateComponents([.hour, .minute], from: endPeriod)
 
-            let schedule = DeviceActivitySchedule(
-                intervalStart: now,
-                intervalEnd: twoHoursFromNow,
-                repeats: false
-            )
+        let schedule = DeviceActivitySchedule(
+            intervalStart: startComponent,
+            intervalEnd: endComponent,
+            repeats: false
+        )
             
-            do {
-            try center.startMonitoring(activityName, during: schedule)
-            print("Lockout Period monitoring started")
-            } catch {
-            print("Failed to start lockout period monitoring: \(error)")
-            }
+        do {
+        try center.startMonitoring(activityName, during: schedule)
+        print("Lockout period monitoring started")
+        } catch {
+        print("Failed to start lockout period monitoring: \(error)")
+        }
     }
 }
     

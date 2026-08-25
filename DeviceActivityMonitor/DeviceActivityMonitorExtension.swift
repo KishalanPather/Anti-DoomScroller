@@ -14,7 +14,6 @@ import ManagedSettings
 // Make sure that your class name matches the NSExtensionPrincipalClass in your Info.plist.
 class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     let blockingService = BlockingService()
-    let monitoringService = MonitoringService()
     
     override func intervalDidStart(for activity: DeviceActivityName) {
         super.intervalDidStart(for: activity)
@@ -26,14 +25,18 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         super.intervalDidEnd(for: activity)
         
         // Handle the end of the interval.
+        if activity == DeviceActivityName("LockoutPeriod"){
+            print("intervalDidEnd() callback fired, lockout period ended.")
+        }
     }
     
     override func eventDidReachThreshold(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
         super.eventDidReachThreshold(event, activity: activity)
         
-        if event == DeviceActivityEvent.Name("HitOneMinute"){
+        if event == DeviceActivityEvent.Name("ScrollLimitReached"){
             //blockingService.startBlocking()
-            print("1 minute reached! Shields applied.")
+            MonitoringService.startMonitorLockoutPeriod()
+            print("EventReachThreshold() callback fired. scroll limit reached.")
         }
     }
     
