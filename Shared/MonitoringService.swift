@@ -12,6 +12,8 @@ import Foundation
 class MonitoringService{
     static let center = DeviceActivityCenter()
        
+    private init(){}
+    
        static func startMonitorScrollLimit() {
            
            let selection = AppGroupStateStore.shared.getSelectedApps()
