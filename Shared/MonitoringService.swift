@@ -8,10 +8,11 @@
 import FamilyControls
 import DeviceActivity
 import Foundation
+import os
 
 class MonitoringService{
     static let center = DeviceActivityCenter()
-       
+    
     private init(){}
     
        static func startMonitorScrollLimit() {
@@ -59,11 +60,13 @@ class MonitoringService{
     }
     
     static func startMonitorLockoutPeriod(){
+        let logger = Logger(subsystem: "com.kish.antidoomscroller2.MonitorExtension", category: "ShieldLogic")
+        logger.notice("startMonitorLockoutPeriod() Started")
         let cooldownPeriod = AppGroupStateStore.shared.getLockoutPeriod()
         let activityName = DeviceActivityName("LockoutPeriod")
         
         let now = Date()
-        let endPeriod = Date().addingTimeInterval(120) //setting is to 2 min for testing purposes
+        let endPeriod = Date().addingTimeInterval(15 * 60) //setting is to 15 min for testing purposes
 
         let startComponent = Calendar.current.dateComponents([.hour, .minute], from: now)
         let endComponent = Calendar.current.dateComponents([.hour, .minute], from: endPeriod)
@@ -77,8 +80,10 @@ class MonitoringService{
         do {
         try center.startMonitoring(activityName, during: schedule)
         print("Lockout period monitoring started")
+            logger.notice("startMonitorLockoutperiod() is monitoring successfully")
         } catch {
         print("Failed to start lockout period monitoring: \(error)")
+            logger.notice("startMonitorLockoutperiod() is NOT monitoring. Unsuccessful. Error: \(error)")
         }
     }
 }

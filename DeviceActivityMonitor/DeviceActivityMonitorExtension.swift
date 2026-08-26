@@ -8,17 +8,22 @@
 import DeviceActivity
 import FamilyControls
 import ManagedSettings
+import os
 
 
 // Optionally override any of the functions below.
 // Make sure that your class name matches the NSExtensionPrincipalClass in your Info.plist.
 class DeviceActivityMonitorExtension: DeviceActivityMonitor {
+    
     let blockingService = BlockingService()
+    let logger = Logger(subsystem: "com.kish.antidoomscroller2.MonitorExtension", category: "ShieldLogic")
     
     override func intervalDidStart(for activity: DeviceActivityName) {
         super.intervalDidStart(for: activity)
         
-        // Handle the start of the interval.
+        if activity == DeviceActivityName("LockoutPeriod") {
+            logger.notice("intervalDidStart() fired, lockout period monitoring started.")
+        }
     }
     
     override func intervalDidEnd(for activity: DeviceActivityName) {
@@ -26,7 +31,10 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         
         // Handle the end of the interval.
         if activity == DeviceActivityName("LockoutPeriod"){
+            blockingService.stopBlocking()
             print("intervalDidEnd() callback fired, lockout period ended.")
+            logger.notice("intervalDidEnd() callback fired, lockout period ended")
+            
         }
     }
     
@@ -34,9 +42,11 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         super.eventDidReachThreshold(event, activity: activity)
         
         if event == DeviceActivityEvent.Name("ScrollLimitReached"){
-            //blockingService.startBlocking()
+            blockingService.startBlocking(selection: AppGroupStateStore.shared.getSelectedApps()!)
             MonitoringService.startMonitorLockoutPeriod()
             print("EventReachThreshold() callback fired. scroll limit reached.")
+            logger.notice("Threshold reached for event: \(event.rawValue)")
+            
         }
     }
     
