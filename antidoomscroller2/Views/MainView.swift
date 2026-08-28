@@ -32,7 +32,7 @@ struct MainView: View{
             .buttonStyle(.borderedProminent)
         
         Button("Activate monitoring"){
-            MonitoringService.startMonitorScrollLimit()
+            MonitoringService.startMonitorScrollLimitWithIntervals()
         }
             .buttonStyle(.borderedProminent)
         
