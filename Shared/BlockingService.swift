@@ -13,7 +13,7 @@ import Foundation
 final class BlockingService {
     let store = ManagedSettingsStore()
 
-    
+    //start blocking
     func startBlocking(selection:FamilyActivitySelection) {
         if selection.applicationTokens.isEmpty && selection.categoryTokens.isEmpty {
             print("No apps to be blocked.")
