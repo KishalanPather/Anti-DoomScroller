@@ -21,6 +21,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     override func intervalDidStart(for activity: DeviceActivityName) {
         super.intervalDidStart(for: activity)
         
+        // Handle the start of the interval.
         if activity == DeviceActivityName("LockoutPeriod") {
             logger.notice("intervalDidStart() fired, lockout period monitoring started.")
         }
@@ -32,8 +33,8 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         // Handle the end of the interval.
         if activity == DeviceActivityName("LockoutPeriod"){
             blockingService.stopBlocking()
-            print("intervalDidEnd() callback fired, lockout period ended.")
             logger.notice("intervalDidEnd() callback fired, lockout period ended")
+            
             
         }
     }
@@ -41,10 +42,10 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     override func eventDidReachThreshold(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
         super.eventDidReachThreshold(event, activity: activity)
         
-        if event == DeviceActivityEvent.Name("ScrollLimitReached"){
+        if event.rawValue.hasPrefix("ScrollLimitReached"){
             blockingService.startBlocking(selection: AppGroupStateStore.shared.getSelectedApps()!)
             MonitoringService.startMonitorLockoutPeriod()
-            print("EventReachThreshold() callback fired. scroll limit reached.")
+            
             logger.notice("Threshold reached for event: \(event.rawValue)")
             
         }
