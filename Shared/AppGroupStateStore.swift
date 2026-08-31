@@ -81,7 +81,7 @@ final class AppGroupStateStore {
     }
         
     func getLockoutPeriod() -> Int {
-       return defaults.integer(forKey: Keys.scrollLimit)
+       return defaults.integer(forKey: Keys.lockoutPeriod)
     }
         
     func setRestrictionEndsAt(_ restrictionEnd: Int){

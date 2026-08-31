@@ -36,6 +36,12 @@ struct MainView: View{
         }
             .buttonStyle(.borderedProminent)
         
+        Button("Show app Group state (testing)"){
+            print(AppGroupStateStore.shared.getScrollLimit())
+            print(AppGroupStateStore.shared.getLockoutPeriod())
+            
+        }
+        
         Button("Stop monitoring (test purposes)"){
             MonitoringService.stopMonitorScrollLimit()
         }

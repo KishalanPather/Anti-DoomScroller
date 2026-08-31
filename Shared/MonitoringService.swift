@@ -18,7 +18,7 @@ class MonitoringService{
     static func startMonitorScrollLimitWithIntervals(){
         let logger = Logger(subsystem: "com.kish.antidoomscroller2.MonitorExtension", category: "ShieldLogic")
         let selection = AppGroupStateStore.shared.getSelectedApps()
-        let scrollLimit = 1 //AppGroupStateStore.shared.getScrollLimit()
+        let scrollLimit = AppGroupStateStore.shared.getScrollLimit()
         let cycleHours = 2 // The length of the repeating window, will be default 2 hours for now.
         
         center.stopMonitoring() //Clear any existing monitoring before this starts
@@ -60,44 +60,7 @@ class MonitoringService{
         }
     }
     
-    
-    static func startMonitorScrollLimit() {
 
-        let selection = AppGroupStateStore.shared.getSelectedApps()
-        //let scrollLimit = AppGroupStateStore.shared.getScrollLimit()
-           
-        // 1. Save the selection so the extension can see it later
-            //selection.saveToAppGroup()
-            let activityName = DeviceActivityName("ScrollLimit")
-            let eventName = DeviceActivityEvent.Name("ScrollLimitReached")
-            
-            // 2. Define the 24-hour window where we track time
-            let schedule = DeviceActivitySchedule(
-                intervalStart: DateComponents(hour: 0, minute: 0),
-                intervalEnd: DateComponents(hour: 23, minute: 59),
-                repeats: true
-            )
-               
-            // 3. Define the actual 5-minute limit tied to their selected apps
-            let event = DeviceActivityEvent(
-            applications: selection!.applicationTokens,
-            categories: selection!.categoryTokens,
-            webDomains: selection!.webDomainTokens,
-            threshold: DateComponents(second: 1) // 1 second! using 1 sec for testing purposes
-            )
-               
-            // 4. Start monitoring with BOTH the schedule and the event
-            do {
-                try center.startMonitoring(
-                    activityName,
-                    during: schedule,
-                    events: [eventName: event] // Pass the event here!
-                )
-                print("Scroll limit monitoring started.")
-            } catch {
-                print("Error starting scroll limit monitoring. Error: \(error)")
-            }
-        }
 
     static func stopMonitorScrollLimit(){
         center.stopMonitoring()
@@ -108,11 +71,11 @@ class MonitoringService{
     static func startMonitorLockoutPeriod(){
         let logger = Logger(subsystem: "com.kish.antidoomscroller2.MonitorExtension", category: "ShieldLogic")
         logger.notice("startMonitorLockoutPeriod() Started")
-        //let cooldownPeriod = AppGroupStateStore.shared.getLockoutPeriod()
+        let lockoutPeriod = AppGroupStateStore.shared.getLockoutPeriod()
         let activityName = DeviceActivityName("LockoutPeriod")
         
         let now = Date()
-        let endPeriod = Date().addingTimeInterval(15 * 60) //setting is to 15 min for testing purposes
+        let endPeriod = Date().addingTimeInterval(TimeInterval(lockoutPeriod * 60))
 
         let startComponent = Calendar.current.dateComponents([.hour, .minute], from: now)
         let endComponent = Calendar.current.dateComponents([.hour, .minute], from: endPeriod)
