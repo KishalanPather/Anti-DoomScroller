@@ -53,6 +53,8 @@ class MonitoringService{
                 )
             print("Successfully started \(totalBlocks) micro-schedules.")
             logger.notice("Successfully started \(totalBlocks) micro-schedules.")
+            //AppGroupStateStore.shared.setAppState(AppState.monitoring)
+            UserDefaults(suiteName: "group.com.kishalan.antidoomscroller2")!.set(AppState.monitoring,forKey:"AppStateTest")
             } catch {
             print("Failed to start block \(i): \(error)")
             logger.notice("Failed to start block \(i): \(error)")
@@ -65,7 +67,7 @@ class MonitoringService{
     static func stopMonitorScrollLimit(){
         center.stopMonitoring()
         print("All monitoring stopped.")
-        
+        AppGroupStateStore.shared.setAppState(AppState.inactive)
     }
     
     static func startMonitorLockoutPeriod(){
@@ -87,11 +89,12 @@ class MonitoringService{
         )
             
         do {
-        try center.startMonitoring(activityName, during: schedule)
-        print("Lockout period monitoring started")
+            try center.startMonitoring(activityName, during: schedule)
+            print("Lockout period monitoring started")
             logger.notice("startMonitorLockoutperiod() is monitoring successfully")
+            AppGroupStateStore.shared.setAppState(AppState.restricted)
         } catch {
-        print("Failed to start lockout period monitoring: \(error)")
+            print("Failed to start lockout period monitoring: \(error)")
             logger.notice("startMonitorLockoutperiod() is NOT monitoring. Unsuccessful. Error: \(error)")
         }
     }

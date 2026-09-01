@@ -34,6 +34,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         if activity == DeviceActivityName("LockoutPeriod"){
             blockingService.stopBlocking()
             logger.notice("intervalDidEnd() callback fired, lockout period ended")
+            AppGroupStateStore.shared.setAppState(AppState.inactive)
             
             
         }
