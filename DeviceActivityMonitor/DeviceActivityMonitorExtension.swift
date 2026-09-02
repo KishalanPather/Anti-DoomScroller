@@ -17,6 +17,8 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     
     let blockingService = BlockingService()
     let logger = Logger(subsystem: "com.kish.antidoomscroller2.MonitorExtension", category: "ShieldLogic")
+    let sharedDefaults = UserDefaults(suiteName: "group.com.kishalan.antidoomscroller2") ?? UserDefaults.standard
+    
     
     override func intervalDidStart(for activity: DeviceActivityName) {
         super.intervalDidStart(for: activity)
@@ -34,7 +36,8 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         if activity == DeviceActivityName("LockoutPeriod"){
             blockingService.stopBlocking()
             logger.notice("intervalDidEnd() callback fired, lockout period ended")
-            AppGroupStateStore.shared.setAppState(AppState.inactive)
+            //AppGroupStateStore.shared.setAppState(AppState.inactive)
+            sharedDefaults.set(AppState.inactive.rawValue,forKey:"AppStateTest")
             
             
         }
