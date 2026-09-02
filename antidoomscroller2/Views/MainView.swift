@@ -14,6 +14,12 @@ struct MainView: View{
     @AppStorage("AppStateTest", store: UserDefaults(suiteName: "group.com.kishalan.antidoomscroller2"))
     var isAppState:AppState = .inactive
     
+    @AppStorage("scrollLimitTest", store: UserDefaults(suiteName: "group.com.kishalan.antidoomscroller2"))
+    var scrollLimit: Int = 0
+    
+    @AppStorage("LockoutPeriodTest", store: UserDefaults(suiteName: "group.com.kishalan.antidoomscroller2"))
+    var lockoutPeriod: Int = 0
+    
     
     var body: some View {
         Text("Main View")
@@ -24,6 +30,15 @@ struct MainView: View{
             Text("State: Monitoring")
         }else if isAppState == .restricted {
             Text("State: Restricted")
+        }
+        
+        VStack{
+            //  Display the result using the state variable
+            Text("Scroll Limit: \(scrollLimit)")
+            .font(.headline)
+            
+            Text("Lockout Period: \(lockoutPeriod)")
+            .font(.headline)
         }
         
         Button("Configure Blocking Settings"){
