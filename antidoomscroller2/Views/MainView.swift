@@ -9,17 +9,20 @@ import SwiftUI
 
 struct MainView: View{
     @State private var showingConfigureBlocking = false
-    @State private var appState = AppState.inactive //will have to load from appgroup later
+    @State private var appState = AppGroupStateStore.shared.getAppState()
+    
+    @AppStorage("AppStateTest", store: UserDefaults(suiteName: "group.com.kishalan.antidoomscroller2"))
+    var isAppState:AppState = .inactive
     
     
     var body: some View {
         Text("Main View")
         
-        if appState == .inactive{
+        if isAppState == .inactive{
             Text("State: Inactive")
-        } else if appState == .monitoring {
+        } else if isAppState == .monitoring {
             Text("State: Monitoring")
-        }else if appState == .restricted {
+        }else if isAppState == .restricted {
             Text("State: Restricted")
         }
         

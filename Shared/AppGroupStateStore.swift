@@ -14,7 +14,7 @@ final class AppGroupStateStore {
     private let appGroupID = "group.com.kishalan.antidoomscroller2"
     private let defaults:UserDefaults
     
-    private enum Keys{          //uses singleton design pattern
+    private enum Keys {          //uses singleton design pattern
         static let selectedApps = "selectedApps"
         static let scrollLimit = "scrollLimit"
         static let lockoutPeriod = "lockoutPeriod"
@@ -26,7 +26,7 @@ final class AppGroupStateStore {
     private init() {
             guard let defaults = UserDefaults(suiteName: appGroupID)
         else {
-                fatalError("Could not access App Group UserDefaults")
+            fatalError("Could not access App Group UserDefaults")
             }
             self.defaults = defaults
         }

@@ -12,6 +12,7 @@ import os
 
 class MonitoringService{
     static let center = DeviceActivityCenter()
+    static let sharedDefaults = UserDefaults(suiteName: "group.com.kishalan.antidoomscroller2") ?? UserDefaults.standard
     
     private init(){}
     
@@ -53,11 +54,19 @@ class MonitoringService{
                 )
             print("Successfully started \(totalBlocks) micro-schedules.")
             logger.notice("Successfully started \(totalBlocks) micro-schedules.")
+            //AppGroupStateStore.shared.setAppState(AppState.monitoring)
             } catch {
             print("Failed to start block \(i): \(error)")
             logger.notice("Failed to start block \(i): \(error)")
             }
         }
+        
+    
+            sharedDefaults.set(AppState.monitoring.rawValue,forKey:"AppStateTest")
+            
+                
+        
+        
     }
     
 
@@ -65,7 +74,8 @@ class MonitoringService{
     static func stopMonitorScrollLimit(){
         center.stopMonitoring()
         print("All monitoring stopped.")
-        
+        //AppGroupStateStore.shared.setAppState(AppState.inactive)
+        sharedDefaults.set(AppState.inactive.rawValue,forKey:"AppStateTest")
     }
     
     static func startMonitorLockoutPeriod(){
@@ -87,11 +97,13 @@ class MonitoringService{
         )
             
         do {
-        try center.startMonitoring(activityName, during: schedule)
-        print("Lockout period monitoring started")
+            try center.startMonitoring(activityName, during: schedule)
+            print("Lockout period monitoring started")
             logger.notice("startMonitorLockoutperiod() is monitoring successfully")
+            //AppGroupStateStore.shared.setAppState(AppState.restricted)
+            sharedDefaults.set(AppState.restricted.rawValue,forKey:"AppStateTest")
         } catch {
-        print("Failed to start lockout period monitoring: \(error)")
+            print("Failed to start lockout period monitoring: \(error)")
             logger.notice("startMonitorLockoutperiod() is NOT monitoring. Unsuccessful. Error: \(error)")
         }
     }
