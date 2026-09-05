@@ -23,7 +23,7 @@ final class AppGroupStateStore {
         static let appState = "appState"
         static let restrictionEndsAt = "restrictionEndsAt"
     }
-    
+    //All State variables
     var selectedApps: FamilyActivitySelection {
         didSet { setSelectedApps(selectedApps) }
     }
@@ -48,7 +48,7 @@ final class AppGroupStateStore {
             }
             self.defaults = defaults
         
-            //set app variables
+            //Retrive state variables from app group. Set default values if not found
             self.scrollLimit = defaults.integer(forKey: Keys.scrollLimit)
             self.lockoutPeriod = defaults.integer(forKey: Keys.lockoutPeriod)
             self.restrictionEndsAt = defaults.integer(forKey: Keys.restrictionEndsAt)

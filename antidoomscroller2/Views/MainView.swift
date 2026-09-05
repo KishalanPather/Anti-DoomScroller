@@ -10,11 +10,7 @@ import SwiftUI
 struct MainView: View{
     @State private var showingConfigureBlocking = false
     
-    private var appState = AppGroupStateStore.shared.appState
-    private var scrollLimit = AppGroupStateStore.shared.scrollLimit
-    private var lockoutPeriod = AppGroupStateStore.shared.lockoutPeriod
       
-    
     var body: some View {
         Text("Main View")
         
