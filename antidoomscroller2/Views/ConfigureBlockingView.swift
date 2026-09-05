@@ -13,24 +13,19 @@ struct ConfigureBlockingView: View{
     
     @State private var showingPicker = false
     @State private var appState = AppState.inactive
-    @State private var restrictionEndsAt = false
+    @State private var restrictionEndsAt = 0
     
     @State private var selection = FamilyActivitySelection()
-    //@State private var scrollLimit = 0
-   // @State private var lockoutPeriod = 0
+    @State private var scrollLimit = 0
+    @State private var lockoutPeriod = 0
     
-    @AppStorage("scrollLimitTest", store: UserDefaults(suiteName: "group.com.kishalan.antidoomscroller2"))
-    var scrollLimit: Int = 0
-    
-    @AppStorage("LockoutPeriodTest", store: UserDefaults(suiteName: "group.com.kishalan.antidoomscroller2"))
-    var lockoutPeriod: Int = 0
     
     private func submitForm(){
-        AppGroupStateStore.shared.setSelectedApps(selection)
-       // AppGroupStateStore.shared.setScrollLimit(scrollLimit)
-       // AppGroupStateStore.shared.setLockoutPeriod(lockoutPeriod)
-        AppGroupStateStore.shared.setAppState(appState)
-        AppGroupStateStore.shared.setRestrictionEndsAt(0)
+        AppGroupStateStore.shared.selectedApps = selection
+        AppGroupStateStore.shared.appState = appState
+        AppGroupStateStore.shared.scrollLimit = scrollLimit
+        AppGroupStateStore.shared.lockoutPeriod = lockoutPeriod
+        AppGroupStateStore.shared.restrictionEndsAt = restrictionEndsAt
         print("Form submitted")
         dismiss()
     }
@@ -72,4 +67,4 @@ struct ConfigureBlockingView: View{
     
 }
 
-#Preview {ConfigureBlockingView()}
+//#Preview {ConfigureBlockingView()}
