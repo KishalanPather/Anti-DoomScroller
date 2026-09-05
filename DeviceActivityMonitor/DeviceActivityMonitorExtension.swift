@@ -18,7 +18,6 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     
     let blockingService = BlockingService()
     let logger = Logger(subsystem: "com.kish.antidoomscroller2.MonitorExtension", category: "ShieldLogic")
-    let sharedDefaults = UserDefaults(suiteName: "group.com.kishalan.antidoomscroller2") ?? UserDefaults.standard
     
     
     override func intervalDidStart(for activity: DeviceActivityName) {
@@ -37,8 +36,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         if activity == DeviceActivityName("LockoutPeriod"){
             blockingService.stopBlocking()
             logger.notice("intervalDidEnd() callback fired, lockout period ended")
-            //AppGroupStateStore.shared.setAppState(AppState.inactive)
-            sharedDefaults.set(AppState.inactive.rawValue,forKey:"AppStateTest")
+            AppGroupStateStore.shared.appState = AppState.inactive
             
             
         }
@@ -48,7 +46,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         super.eventDidReachThreshold(event, activity: activity)
         
         if event.rawValue.hasPrefix("ScrollLimitReached"){
-            blockingService.startBlocking(selection: AppGroupStateStore.shared.getSelectedApps()!)
+            blockingService.startBlocking(selection: AppGroupStateStore.shared.selectedApps)
             MonitoringService.startMonitorLockoutPeriod()
             
             logger.notice("Threshold reached for event: \(event.rawValue)")

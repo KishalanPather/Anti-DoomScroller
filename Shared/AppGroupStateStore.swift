@@ -7,12 +7,14 @@
 
 import Foundation
 import FamilyControls
+import Observation
 
+@Observable
 final class AppGroupStateStore {
     static let shared = AppGroupStateStore()
     
-    private let appGroupID = "group.com.kishalan.antidoomscroller2"
-    private let defaults:UserDefaults
+    @ObservationIgnored private let appGroupID = "group.com.kishalan.antidoomscroller2"
+    @ObservationIgnored  let defaults:UserDefaults
     
     private enum Keys {          //uses singleton design pattern
         static let selectedApps = "selectedApps"
@@ -20,6 +22,22 @@ final class AppGroupStateStore {
         static let lockoutPeriod = "lockoutPeriod"
         static let appState = "appState"
         static let restrictionEndsAt = "restrictionEndsAt"
+    }
+    //All State variables
+    var selectedApps: FamilyActivitySelection {
+        didSet { setSelectedApps(selectedApps) }
+    }
+    var appState: AppState {
+        didSet{defaults.set(appState.rawValue, forKey: Keys.appState)}
+    }
+    var scrollLimit: Int {
+        didSet{defaults.set(scrollLimit, forKey: Keys.scrollLimit)}
+    }
+    var lockoutPeriod: Int {
+        didSet{defaults.set(lockoutPeriod, forKey: Keys.lockoutPeriod)}
+    }
+    var restrictionEndsAt: Int {
+        didSet{defaults.set(restrictionEndsAt, forKey: Keys.restrictionEndsAt)}
     }
     
     
@@ -29,10 +47,30 @@ final class AppGroupStateStore {
             fatalError("Could not access App Group UserDefaults")
             }
             self.defaults = defaults
+        
+            //Retrive state variables from app group. Set default values if not found
+            self.scrollLimit = defaults.integer(forKey: Keys.scrollLimit)
+            self.lockoutPeriod = defaults.integer(forKey: Keys.lockoutPeriod)
+            self.restrictionEndsAt = defaults.integer(forKey: Keys.restrictionEndsAt)
+        
+            if let rawValue = defaults.string(forKey: Keys.appState), let state = AppState(rawValue: rawValue) {
+                    self.appState = state
+            } else {
+                self.appState = AppState.inactive
+            }
+        
+            if let data = defaults.data(forKey: Keys.selectedApps),
+                   let decoded = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data) {
+                    self.selectedApps = decoded
+            } else {
+                self.selectedApps = FamilyActivitySelection()
+            }
+        
         }
     
     
-    func setSelectedApps(_ selection:FamilyActivitySelection){
+    
+     private func setSelectedApps(_ selection:FamilyActivitySelection){
         do{
             let data = try JSONEncoder().encode(selection)
             defaults.set(data, forKey: Keys.selectedApps)
@@ -40,56 +78,6 @@ final class AppGroupStateStore {
         }catch{
             print("Failed to save selected apps. Error: \(error)")
         }
-    }
-    
-     func getSelectedApps() -> FamilyActivitySelection? {
-        guard let data = defaults.data(forKey: Keys.selectedApps) else {
-            return nil
-        }
-
-        do {
-            return try JSONDecoder().decode(FamilyActivitySelection.self,from: data)
-            } catch {
-                print("Failed to load selected apps: \(error)")
-                return nil
-            }
-    }
-    
-    
-    func setAppState(_ appState: AppState){
-        defaults.set(appState.rawValue, forKey: Keys.appState)
-    }
-    
-        
-    func getAppState() -> AppState? {
-        guard let rawValue = defaults.string(forKey: Keys.appState) else {
-                return nil
-            }
-            return AppState(rawValue: rawValue)
-    }
-        
-    func setScrollLimit (_ minutes: Int){
-        defaults.set(minutes, forKey: Keys.scrollLimit)
-    }
-        
-    func getScrollLimit() -> Int {
-        return defaults.integer(forKey: Keys.scrollLimit)
-    }
-        
-    func setLockoutPeriod(_ lockOutPeriod: Int){
-        defaults.set(lockOutPeriod, forKey: Keys.lockoutPeriod)
-    }
-        
-    func getLockoutPeriod() -> Int {
-       return defaults.integer(forKey: Keys.lockoutPeriod)
-    }
-        
-    func setRestrictionEndsAt(_ restrictionEnd: Int){
-        defaults.set(restrictionEnd, forKey: Keys.restrictionEndsAt)
-    }
-        
-    func getRestrictionEndsAt() -> Int {
-        return defaults.integer(forKey: Keys.restrictionEndsAt)
     }
     
     

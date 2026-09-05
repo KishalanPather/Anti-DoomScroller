@@ -12,21 +12,19 @@ import os
 
 class MonitoringService{
     static let center = DeviceActivityCenter()
-    static let sharedDefaults = UserDefaults(suiteName: "group.com.kishalan.antidoomscroller2") ?? UserDefaults.standard
-    
     private init(){}
     
     static func startMonitorScrollLimitWithIntervals(){
         let logger = Logger(subsystem: "com.kish.antidoomscroller2.MonitorExtension", category: "ShieldLogic")
-        let selection = AppGroupStateStore.shared.getSelectedApps()
-        let scrollLimit = AppGroupStateStore.shared.getScrollLimit()
+        let selection = AppGroupStateStore.shared.selectedApps
+        let scrollLimit = AppGroupStateStore.shared.scrollLimit
         let cycleHours = 2 // The length of the repeating window, will be default 2 hours for now.
         
         center.stopMonitoring() //Clear any existing monitoring before this starts
         
         let event = DeviceActivityEvent(
-            applications: selection!.applicationTokens,
-            categories: selection!.categoryTokens,
+            applications: selection.applicationTokens,
+            categories: selection.categoryTokens,
             threshold: DateComponents(minute: scrollLimit)
         )
         
@@ -53,16 +51,14 @@ class MonitoringService{
                 events: [eventName: event]
                 )
             print("Successfully started \(totalBlocks) micro-schedules.")
+            AppGroupStateStore.shared.appState = AppState.monitoring
             logger.notice("Successfully started \(totalBlocks) micro-schedules.")
-            //AppGroupStateStore.shared.setAppState(AppState.monitoring)
             } catch {
             print("Failed to start block \(i): \(error)")
             logger.notice("Failed to start block \(i): \(error)")
             }
         }
         
-    
-            sharedDefaults.set(AppState.monitoring.rawValue,forKey:"AppStateTest")
             
                 
         
@@ -74,14 +70,14 @@ class MonitoringService{
     static func stopMonitorScrollLimit(){
         center.stopMonitoring()
         print("All monitoring stopped.")
-        //AppGroupStateStore.shared.setAppState(AppState.inactive)
-        sharedDefaults.set(AppState.inactive.rawValue,forKey:"AppStateTest")
+        AppGroupStateStore.shared.appState = AppState.inactive
     }
+    
     
     static func startMonitorLockoutPeriod(){
         let logger = Logger(subsystem: "com.kish.antidoomscroller2.MonitorExtension", category: "ShieldLogic")
         logger.notice("startMonitorLockoutPeriod() Started")
-        let lockoutPeriod = AppGroupStateStore.shared.getLockoutPeriod()
+        let lockoutPeriod = AppGroupStateStore.shared.lockoutPeriod
         let activityName = DeviceActivityName("LockoutPeriod")
         
         let now = Date()
@@ -99,9 +95,8 @@ class MonitoringService{
         do {
             try center.startMonitoring(activityName, during: schedule)
             print("Lockout period monitoring started")
+            AppGroupStateStore.shared.appState = AppState.restricted
             logger.notice("startMonitorLockoutperiod() is monitoring successfully")
-            //AppGroupStateStore.shared.setAppState(AppState.restricted)
-            sharedDefaults.set(AppState.restricted.rawValue,forKey:"AppStateTest")
         } catch {
             print("Failed to start lockout period monitoring: \(error)")
             logger.notice("startMonitorLockoutperiod() is NOT monitoring. Unsuccessful. Error: \(error)")
