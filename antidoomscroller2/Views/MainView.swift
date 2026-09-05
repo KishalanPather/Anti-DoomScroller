@@ -19,7 +19,7 @@ struct MainView: View{
     
     @AppStorage("LockoutPeriodTest", store: UserDefaults(suiteName: "group.com.kishalan.antidoomscroller2"))
     var lockoutPeriod: Int = 0
-    
+      
     
     var body: some View {
         Text("Main View")
