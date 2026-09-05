@@ -16,13 +16,19 @@ struct ConfigureBlockingView: View{
     @State private var restrictionEndsAt = false
     
     @State private var selection = FamilyActivitySelection()
-    @State private var scrollLimit = 0
-    @State private var lockoutPeriod = 0
+    //@State private var scrollLimit = 0
+   // @State private var lockoutPeriod = 0
+    
+    @AppStorage("scrollLimitTest", store: UserDefaults(suiteName: "group.com.kishalan.antidoomscroller2"))
+    var scrollLimit: Int = 0
+    
+    @AppStorage("LockoutPeriodTest", store: UserDefaults(suiteName: "group.com.kishalan.antidoomscroller2"))
+    var lockoutPeriod: Int = 0
     
     private func submitForm(){
         AppGroupStateStore.shared.setSelectedApps(selection)
-        AppGroupStateStore.shared.setScrollLimit(scrollLimit)
-        AppGroupStateStore.shared.setLockoutPeriod(lockoutPeriod)
+       // AppGroupStateStore.shared.setScrollLimit(scrollLimit)
+       // AppGroupStateStore.shared.setLockoutPeriod(lockoutPeriod)
         AppGroupStateStore.shared.setAppState(appState)
         AppGroupStateStore.shared.setRestrictionEndsAt(0)
         print("Form submitted")
