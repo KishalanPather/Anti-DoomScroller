@@ -48,7 +48,8 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         if event.rawValue.hasPrefix("ScrollLimitReached"){
             blockingService.startBlocking(selection: AppGroupStateStore.shared.selectedApps)
             MonitoringService.startMonitorLockoutPeriod()
-            
+            AppGroupStateStore.shared.restrictionStartsAt = Date()
+            AppGroupStateStore.shared.restrictionEndsAt = Calendar.current.date(byAdding: .minute, value: AppGroupStateStore.shared.lockoutPeriod, to: AppGroupStateStore.shared.restrictionStartsAt)!
             logger.notice("Threshold reached for event: \(event.rawValue)")
             
         }

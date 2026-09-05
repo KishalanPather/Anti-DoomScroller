@@ -19,19 +19,26 @@ struct TimerView: View{
         
         let calendar = Calendar.current
         guard let specificDate = calendar.date(from: components) else { return Date() }
-        return specificDate
+        
+        let newDate = Calendar.current.date(byAdding: .minute, value: 120, to: specificDate)!
+        return newDate
         
     }
     
+    func calculateRestrictionEnd() -> Date {
+        let newDate = Calendar.current.date(byAdding: .minute, value: 120, to: AppGroupStateStore.shared.restrictionStartsAt)!
+        AppGroupStateStore.shared.restrictionEndsAt = newDate
+        return newDate
+    }
+    
+    
     
     var body: some View {
-        
-
-        
-        let today = Date()
-        let twoHoursFromNow = Calendar.current.date(byAdding: .minute, value: 120, to: getDate())!
-        Text(getDate(), style: .timer)
+        Text(AppGroupStateStore.shared.restrictionEndsAt, style: .timer)
             .font(.title)
+        
+        Text(" starts at: \(AppGroupStateStore.shared.restrictionStartsAt)")
+        Text(" ends at: \(AppGroupStateStore.shared.restrictionEndsAt)")
     }
 }
 

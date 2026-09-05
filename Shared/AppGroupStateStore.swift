@@ -8,6 +8,7 @@
 import Foundation
 import FamilyControls
 import Observation
+import UIKit
 
 @Observable
 final class AppGroupStateStore {
@@ -21,6 +22,7 @@ final class AppGroupStateStore {
         static let scrollLimit = "scrollLimit"
         static let lockoutPeriod = "lockoutPeriod"
         static let appState = "appState"
+        static let restrictionStartsAt = "restrictionStartsAt"
         static let restrictionEndsAt = "restrictionEndsAt"
     }
     //All State variables
@@ -36,7 +38,10 @@ final class AppGroupStateStore {
     var lockoutPeriod: Int {
         didSet{defaults.set(lockoutPeriod, forKey: Keys.lockoutPeriod)}
     }
-    var restrictionEndsAt: Int {
+    var restrictionStartsAt: Date {
+        didSet{defaults.set(restrictionStartsAt, forKey: Keys.restrictionStartsAt)}
+    }
+    var restrictionEndsAt: Date {
         didSet{defaults.set(restrictionEndsAt, forKey: Keys.restrictionEndsAt)}
     }
     
@@ -51,7 +56,8 @@ final class AppGroupStateStore {
             //Retrive state variables from app group. Set default values if not found
             self.scrollLimit = defaults.integer(forKey: Keys.scrollLimit)
             self.lockoutPeriod = defaults.integer(forKey: Keys.lockoutPeriod)
-            self.restrictionEndsAt = defaults.integer(forKey: Keys.restrictionEndsAt)
+            self.restrictionStartsAt = defaults.object(forKey: Keys.restrictionStartsAt) as? Date ?? Date()
+            self.restrictionEndsAt = defaults.object(forKey: Keys.restrictionEndsAt) as? Date ?? Date()
         
             if let rawValue = defaults.string(forKey: Keys.appState), let state = AppState(rawValue: rawValue) {
                     self.appState = state
@@ -66,6 +72,21 @@ final class AppGroupStateStore {
                 self.selectedApps = FamilyActivitySelection()
             }
         
+        NotificationCenter.default.addObserver(
+                forName: UserDefaults.didChangeNotification,
+                object: self.defaults, // Only listen to your App Group
+                queue: .main
+            ) { [weak self] _ in
+                self?.syncWithAppGroup()
+            }
+        
+        NotificationCenter.default.addObserver(
+                    forName: UIApplication.willEnterForegroundNotification,
+                    object: nil,
+                    queue: .main
+                ) { [weak self] _ in
+                    self?.syncWithAppGroup()
+                }
         }
     
     
@@ -78,6 +99,31 @@ final class AppGroupStateStore {
         }catch{
             print("Failed to save selected apps. Error: \(error)")
         }
+    }
+    
+    private func syncWithAppGroup() {
+        //let newScrollLimit = defaults.integer(forKey: Keys.scrollLimit)
+        //if scrollLimit != newScrollLimit { scrollLimit = newScrollLimit }
+        
+       // let newLockout = defaults.integer(forKey: Keys.lockoutPeriod)
+       // if lockoutPeriod != newLockout { lockoutPeriod = newLockout }
+        
+        let newRestrictionStartsAt = defaults.object(forKey: Keys.restrictionStartsAt)
+        if restrictionStartsAt != newRestrictionStartsAt as? Date ?? Date() { restrictionStartsAt = newRestrictionStartsAt as? Date ?? Date() }
+        
+        let newRestrictionEndsAt = defaults.object(forKey: Keys.restrictionEndsAt)
+        if restrictionEndsAt != newRestrictionEndsAt as? Date ?? Date() { restrictionEndsAt = newRestrictionEndsAt as? Date ?? Date() }
+        
+        if let rawValue = defaults.string(forKey: Keys.appState),
+           let state = AppState(rawValue: rawValue),
+           appState != state {
+            appState = state
+        }
+        
+       // if let data = defaults.data(forKey: Keys.selectedApps),
+       //    let decoded = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data) {
+       //     selectedApps = decoded // Automatically replaces if new data exists
+      //  }
     }
     
     

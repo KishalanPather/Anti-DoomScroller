@@ -13,7 +13,7 @@ struct ConfigureBlockingView: View{
     
     @State private var showingPicker = false
     @State private var appState = AppState.inactive
-    @State private var restrictionEndsAt = 0
+   // @State private var restrictionEndsAt
     
     @State private var selection = FamilyActivitySelection()
     @State private var scrollLimit = 0
@@ -25,7 +25,7 @@ struct ConfigureBlockingView: View{
         AppGroupStateStore.shared.appState = appState
         AppGroupStateStore.shared.scrollLimit = scrollLimit
         AppGroupStateStore.shared.lockoutPeriod = lockoutPeriod
-        AppGroupStateStore.shared.restrictionEndsAt = restrictionEndsAt
+        //AppGroupStateStore.shared.restrictionEndsAt = restrictionEndsAt
         print("Form submitted")
         dismiss()
     }
