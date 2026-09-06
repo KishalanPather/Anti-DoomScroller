@@ -72,6 +72,7 @@ final class AppGroupStateStore {
                 self.selectedApps = FamilyActivitySelection()
             }
         
+        // Handle views reloading when the user isn't in the app and state changes
         NotificationCenter.default.addObserver(
                 forName: UserDefaults.didChangeNotification,
                 object: self.defaults, // Only listen to your App Group
