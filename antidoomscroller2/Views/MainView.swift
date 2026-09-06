@@ -17,7 +17,7 @@ struct MainView: View {
                     statusCard
                     settingsCard
                     actionSection
-                    //debugSection
+                    debugSection
                 }
                 .padding()
             }
@@ -123,25 +123,50 @@ struct MainView: View {
     private var actionSection: some View {
         VStack(spacing: 16) {
             
-            Button {
-                MonitoringService.startMonitorScrollLimitWithIntervals()
-            } label: {
-                Label("Activate Monitoring", systemImage: "shield.fill")
-                    .frame(maxWidth: .infinity)
+            if AppGroupStateStore.shared.appState == .restricted{
+                Button {
+                    print("Cannot activate while already in a restricted state")
+                } label: {
+                    Label("Activate Monitoring", systemImage: "shield.fill")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.gray)
+                .controlSize(.large)
+                
+                Button {
+                    MonitoringService.stopMonitorScrollLimit()
+                    print("Cannot stop when in a restricted state")
+                } label: {
+                    Label("Stop Monitoring", systemImage: "stop.circle.fill")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+                .tint(.gray)
+                .controlSize(.large)
+            } else{
+                
+                Button {
+                    MonitoringService.startMonitorScrollLimitWithIntervals()
+                } label: {
+                    Label("Activate Monitoring", systemImage: "shield.fill")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.green)
+                .controlSize(.large)
+                
+                Button {
+                    MonitoringService.stopMonitorScrollLimit()
+                } label: {
+                    Label("Stop Monitoring", systemImage: "stop.circle.fill")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+                .tint(.red)
+                .controlSize(.large)
             }
-            .buttonStyle(.borderedProminent)
-            .tint(.green)
-            .controlSize(.large)
             
-            Button {
-                MonitoringService.stopMonitorScrollLimit()
-            } label: {
-                Label("Stop Monitoring", systemImage: "stop.circle.fill")
-                    .frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.bordered)
-            .tint(.red)
-            .controlSize(.large)
         }
     }
     

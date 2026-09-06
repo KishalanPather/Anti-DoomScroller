@@ -28,7 +28,7 @@ struct ConfigureBlockingView: View {
     
     private func submitForm() {
         AppGroupStateStore.shared.selectedApps = selection
-        AppGroupStateStore.shared.appState = appState
+        //AppGroupStateStore.shared.appState = appState
         AppGroupStateStore.shared.scrollLimit = scrollLimit
         AppGroupStateStore.shared.lockoutPeriod = lockoutPeriod
         
