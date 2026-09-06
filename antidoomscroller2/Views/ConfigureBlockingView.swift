@@ -13,16 +13,25 @@ struct ConfigureBlockingView: View {
     
     @State private var showingPicker = false
     @State private var appState = AppState.inactive
-    
     @State private var selection = FamilyActivitySelection()
-    @State private var scrollLimit = 0
-    @State private var lockoutPeriod = 0
+    
+    // Defaulting to the minimum values of your ranges
+    @State private var scrollLimit: Int = 1
+    @State private var lockoutPeriod: Int = 15
+    
+    // State to track which picker is currently expanded
+    @State private var expandedPicker: ExpandedPicker? = nil
+    
+    enum ExpandedPicker {
+        case scrollLimit, lockoutPeriod
+    }
     
     private func submitForm() {
         AppGroupStateStore.shared.selectedApps = selection
         AppGroupStateStore.shared.appState = appState
         AppGroupStateStore.shared.scrollLimit = scrollLimit
         AppGroupStateStore.shared.lockoutPeriod = lockoutPeriod
+        
         print("Form submitted")
         dismiss()
     }
@@ -44,27 +53,52 @@ struct ConfigureBlockingView: View {
                 }
                 
                 Section {
+                    // MARK: - Scroll Limit Row
                     HStack {
-                        Text("ScrollLimit")
+                        Text("Scroll Limit")
                         Spacer()
-                        TextField("0", value: $scrollLimit, format: .number)
-                            .keyboardType(.numberPad)
-                            .multilineTextAlignment(.trailing)
-                            .frame(width: 200)
-                        Text("min")
-                            .foregroundColor(.secondary)
+                        Text("\(scrollLimit) min")
+                            .foregroundColor(expandedPicker == .scrollLimit ? .blue : .secondary)
+                    }
+                    .contentShape(Rectangle()) // Makes the entire row tappable
+                    .onTapGesture {
+                        withAnimation {
+                            expandedPicker = expandedPicker == .scrollLimit ? nil : .scrollLimit
+                        }
                     }
                     
+                    if expandedPicker == .scrollLimit {
+                        Picker("Scroll Limit", selection: $scrollLimit) {
+                            ForEach(1...60, id: \.self) { minute in
+                                Text("\(minute) min").tag(minute)
+                            }
+                        }
+                        .pickerStyle(.wheel)
+                    }
+                    
+                    // MARK: - Lockout Period Row
                     HStack {
                         Text("Lockout Period")
                         Spacer()
-                        TextField("0", value: $lockoutPeriod, format: .number)
-                            .keyboardType(.numberPad)
-                            .multilineTextAlignment(.trailing)
-                            .frame(width: 100)
-                        Text("min")
-                            .foregroundColor(.secondary)
+                        Text("\(lockoutPeriod) min")
+                            .foregroundColor(expandedPicker == .lockoutPeriod ? .blue : .secondary)
                     }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        withAnimation {
+                            expandedPicker = expandedPicker == .lockoutPeriod ? nil : .lockoutPeriod
+                        }
+                    }
+                    
+                    if expandedPicker == .lockoutPeriod {
+                        Picker("Lockout Period", selection: $lockoutPeriod) {
+                            ForEach(15...300, id: \.self) { minute in
+                                Text("\(minute) min").tag(minute)
+                            }
+                        }
+                        .pickerStyle(.wheel)
+                    }
+                    
                 } header: {
                     Text("Time Settings")
                 }
@@ -89,6 +123,6 @@ struct ConfigureBlockingView: View {
     }
 }
 
-#Preview {ConfigureBlockingView()}
-
-
+#Preview {
+    ConfigureBlockingView()
+}
