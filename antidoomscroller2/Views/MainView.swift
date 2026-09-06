@@ -29,6 +29,10 @@ struct MainView: View{
             
             Text("Lockout Period: \(AppGroupStateStore.shared.lockoutPeriod)")
             .font(.headline)
+            
+            if AppGroupStateStore.shared.appState == .restricted{
+                TimerView()
+            }
         }
         
         Button("Configure Blocking Settings"){
@@ -47,8 +51,9 @@ struct MainView: View{
         Button("Show app Group state (testing)"){
             print(AppGroupStateStore.shared.defaults.integer(forKey: "scrollLimit"))
             print(AppGroupStateStore.shared.defaults.integer(forKey: "lockoutPeriod"))
+            print(AppGroupStateStore.shared.defaults.object(forKey: "restrictionStartsAt")!)
+            print(AppGroupStateStore.shared.defaults.object(forKey: "restrictionEndsAt")!)
     
-            
         }
         
         Button("Stop monitoring (test purposes)"){
