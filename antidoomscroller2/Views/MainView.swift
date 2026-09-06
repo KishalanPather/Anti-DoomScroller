@@ -22,7 +22,7 @@ struct MainView: View {
                 .padding()
             }
             .background(Color(UIColor.systemGroupedBackground)) // Standard iOS background color
-            .navigationTitle("Dashboard")
+            .navigationTitle("Anti-Doomscroller")
             .sheet(isPresented: $showingConfigureBlocking) {
                 ConfigureBlockingView()
             }
@@ -87,6 +87,16 @@ struct MainView: View {
                     icon: "lock.fill"
                 )
             }
+            
+            Button {
+                showingConfigureBlocking = true
+            } label: {
+                Label("Configure Blocking", systemImage: "slider.horizontal.3")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.blue)
+            .controlSize(.large)
         }
         .padding()
         .background(Color(UIColor.secondarySystemGroupedBackground))
@@ -112,15 +122,6 @@ struct MainView: View {
     
     private var actionSection: some View {
         VStack(spacing: 16) {
-            Button {
-                showingConfigureBlocking = true
-            } label: {
-                Label("Configure Blocking", systemImage: "slider.horizontal.3")
-                    .frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(.blue)
-            .controlSize(.large)
             
             Button {
                 MonitoringService.startMonitorScrollLimitWithIntervals()

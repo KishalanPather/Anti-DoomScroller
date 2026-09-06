@@ -8,63 +8,87 @@
 import SwiftUI
 import FamilyControls
 
-struct ConfigureBlockingView: View{
-    @Environment(\.dismiss) var dismiss //allows the view to be dismissed when form is submitted. Swift does it automatically.
+struct ConfigureBlockingView: View {
+    @Environment(\.dismiss) var dismiss
     
     @State private var showingPicker = false
     @State private var appState = AppState.inactive
-   // @State private var restrictionEndsAt
     
     @State private var selection = FamilyActivitySelection()
     @State private var scrollLimit = 0
     @State private var lockoutPeriod = 0
     
-    
-    private func submitForm(){
+    private func submitForm() {
         AppGroupStateStore.shared.selectedApps = selection
         AppGroupStateStore.shared.appState = appState
         AppGroupStateStore.shared.scrollLimit = scrollLimit
         AppGroupStateStore.shared.lockoutPeriod = lockoutPeriod
-        //AppGroupStateStore.shared.restrictionEndsAt = restrictionEndsAt
         print("Form submitted")
         dismiss()
     }
     
-    
     var body: some View {
-        VStack{
-            Text("Configure blocking page")
-            
-            Form{
-                Section(header:Text("Select offending apps")){
-                    Button("Choose Apps"){
+        NavigationStack {
+            Form {
+                Section {
+                    Button {
                         showingPicker = true
+                    } label: {
+                        Label("Choose Restricted Apps", systemImage: "apps.iphone")
                     }
                     .familyActivityPicker(isPresented: $showingPicker, selection: $selection)
+                } header: {
+                    Text("Target Apps")
+                } footer: {
+                    Text("Select the apps that should trigger the timer.")
                 }
                 
-                Section(header: Text("Select scroll time (minutes)")){
-                    TextField("Scroll limit (minutes)", value:$scrollLimit, format: .number)
-                        .keyboardType(.numberPad)
+                Section {
+                    HStack {
+                        Text("ScrollLimit")
+                        Spacer()
+                        TextField("0", value: $scrollLimit, format: .number)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 200)
+                        Text("min")
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    HStack {
+                        Text("Lockout Period")
+                        Spacer()
+                        TextField("0", value: $lockoutPeriod, format: .number)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 100)
+                        Text("min")
+                            .foregroundColor(.secondary)
+                    }
+                } header: {
+                    Text("Time Settings")
                 }
-                
-                Section(header: Text("Select lockout period duration (minutes)")){
-                    TextField("LockoutPeriod (minutes)", value:$lockoutPeriod, format: .number)
-                        .keyboardType(.numberPad)
-                }
-                
-                Section{
-                    Button("Save"){submitForm()}.buttonStyle(.borderedProminent)
-                }
-                
             }
-        
-            
+            .navigationTitle("Configure Limits")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+                
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        submitForm()
+                    }
+                    .fontWeight(.bold)
+                }
+            }
         }
-        
-        
     }
-    
 }
 
-//#Preview {ConfigureBlockingView()}
+#Preview {ConfigureBlockingView()}
+
+
