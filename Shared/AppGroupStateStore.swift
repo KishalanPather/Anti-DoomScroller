@@ -102,12 +102,26 @@ final class AppGroupStateStore {
         }
     }
     
+    //Need a dedicated getter since the complex data type makes it difficult to rely on AppGroupStateStore.shared.selectedApps. Usually just returns stale data
+    func getSelectedApps() -> FamilyActivitySelection? {
+            guard let data = defaults.data(forKey: Keys.selectedApps) else {
+                return nil
+            }
+
+            do {
+                return try JSONDecoder().decode(FamilyActivitySelection.self,from: data)
+                } catch {
+                    print("Failed to load selected apps: \(error)")
+                    return nil
+                }
+        }
+    
     private func syncWithAppGroup() {
-        //let newScrollLimit = defaults.integer(forKey: Keys.scrollLimit)
-        //if scrollLimit != newScrollLimit { scrollLimit = newScrollLimit }
+        let newScrollLimit = defaults.integer(forKey: Keys.scrollLimit)
+        if scrollLimit != newScrollLimit { scrollLimit = newScrollLimit }
         
-       // let newLockout = defaults.integer(forKey: Keys.lockoutPeriod)
-       // if lockoutPeriod != newLockout { lockoutPeriod = newLockout }
+        let newLockout = defaults.integer(forKey: Keys.lockoutPeriod)
+        if lockoutPeriod != newLockout { lockoutPeriod = newLockout }
         
         let newRestrictionStartsAt = defaults.object(forKey: Keys.restrictionStartsAt)
         if restrictionStartsAt != newRestrictionStartsAt as? Date ?? Date() { restrictionStartsAt = newRestrictionStartsAt as? Date ?? Date() }
@@ -121,10 +135,17 @@ final class AppGroupStateStore {
             appState = state
         }
         
-       // if let data = defaults.data(forKey: Keys.selectedApps),
-       //    let decoded = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data) {
-       //     selectedApps = decoded // Automatically replaces if new data exists
-      //  }
+        //if let incomingData = defaults.data(forKey: Keys.selectedApps) {
+        //    // 1. Convert our current memory value into Data for comparison
+        //    let currentData = try? JSONEncoder().encode(selectedApps)
+            
+        //    // 2. Only assign if the bytes are actually different
+        //    if incomingData != currentData {
+       //         if let decoded = try? JSONDecoder().decode(FamilyActivitySelection.self, from: incomingData) {
+       //             selectedApps = decoded
+       //         }
+       //     }
+       // }
     }
     
     

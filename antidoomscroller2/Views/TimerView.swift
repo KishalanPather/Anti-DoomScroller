@@ -13,8 +13,6 @@ struct TimerView: View{
         Text(AppGroupStateStore.shared.restrictionEndsAt, style: .timer)
             .font(.title)
         
-        Text(" starts at: \(AppGroupStateStore.shared.restrictionStartsAt)")
-        Text(" ends at: \(AppGroupStateStore.shared.restrictionEndsAt)")
     }
 }
 

@@ -59,10 +59,6 @@ class MonitoringService{
             }
         }
         
-            
-                
-        
-        
     }
     
 
