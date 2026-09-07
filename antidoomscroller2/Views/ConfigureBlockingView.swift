@@ -119,10 +119,12 @@ struct ConfigureBlockingView: View {
                     .fontWeight(.bold)
                 }
             }
+        }.onAppear {
+            selection = AppGroupStateStore.shared.selectedApps
+            scrollLimit = AppGroupStateStore.shared.scrollLimit
+            lockoutPeriod = AppGroupStateStore.shared.lockoutPeriod
         }
     }
 }
 
-#Preview {
-    ConfigureBlockingView()
-}
+//#Preview {ConfigureBlockingView()}
