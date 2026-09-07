@@ -17,7 +17,7 @@ struct MainView: View {
                     StatusCardView()
                     SettingsCardView(showingConfigureBlocking: $showingConfigureBlocking)
                     ActionSectionView()
-                    debugSection
+                    DebugSectionView()
                 }
                 .padding()
             }
@@ -29,28 +29,9 @@ struct MainView: View {
         }
     }
     
-    // MARK: - UI Components
-    
-    
-    private var debugSection: some View {
-        VStack {
-            Divider()
-                .padding(.vertical)
-            
-            Button("Print AppGroup State (Debug)") {
-                let defaults = AppGroupStateStore.shared.defaults
-                print("Scroll Limit: \(defaults.integer(forKey: "scrollLimit"))")
-                print("Lockout Period: \(defaults.integer(forKey: "lockoutPeriod"))")
-                print("Starts: \(String(describing: defaults.object(forKey: "restrictionStartsAt")))")
-                print("Ends: \(String(describing: defaults.object(forKey: "restrictionEndsAt")))")
-            }
-            .font(.footnote)
-            .foregroundColor(.gray)
-        }
-    }
 
     
-    
+
 }
 
 #Preview {
