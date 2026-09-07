@@ -17,7 +17,7 @@ class MonitoringService{
     static func startMonitorScrollLimitWithIntervals(){
         let logger = Logger(subsystem: "com.kish.antidoomscroller2.MonitorExtension", category: "ShieldLogic")
         let selection = AppGroupStateStore.shared.selectedApps
-        let scrollLimit = AppGroupStateStore.shared.scrollLimit
+        let scrollLimit = AppGroupStateStore.shared.getScrollLimit()
         let cycleHours = 2 // The length of the repeating window, will be default 2 hours for now.
         
         center.stopMonitoring() //Clear any existing monitoring before this starts
@@ -73,7 +73,7 @@ class MonitoringService{
     static func startMonitorLockoutPeriod(){
         let logger = Logger(subsystem: "com.kish.antidoomscroller2.MonitorExtension", category: "ShieldLogic")
         logger.notice("startMonitorLockoutPeriod() Started")
-        let lockoutPeriod = AppGroupStateStore.shared.lockoutPeriod
+        let lockoutPeriod = AppGroupStateStore.shared.getLockoutPeriod()
         let activityName = DeviceActivityName("LockoutPeriod")
         
         let now = Date()
