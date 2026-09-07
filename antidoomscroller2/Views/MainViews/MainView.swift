@@ -16,7 +16,7 @@ struct MainView: View {
                 VStack(spacing: 24) {
                     StatusCardView()
                     SettingsCardView(showingConfigureBlocking: $showingConfigureBlocking)
-                    actionSection
+                    ActionSectionView()
                     debugSection
                 }
                 .padding()
@@ -31,56 +31,6 @@ struct MainView: View {
     
     // MARK: - UI Components
     
-    
-    private var actionSection: some View {
-        VStack(spacing: 16) {
-            
-            if AppGroupStateStore.shared.appState == .restricted{
-                Button {
-                    print("Cannot activate while already in a restricted state")
-                } label: {
-                    Label("Activate Monitoring", systemImage: "shield.fill")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.gray)
-                .controlSize(.large)
-                
-                Button {
-                    MonitoringService.stopMonitorScrollLimit()
-                    print("Cannot stop when in a restricted state")
-                } label: {
-                    Label("Stop Monitoring", systemImage: "stop.circle.fill")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.bordered)
-                .tint(.gray)
-                .controlSize(.large)
-            } else{
-                
-                Button {
-                    MonitoringService.startMonitorScrollLimitWithIntervals()
-                } label: {
-                    Label("Activate Monitoring", systemImage: "shield.fill")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.green)
-                .controlSize(.large)
-                
-                Button {
-                    MonitoringService.stopMonitorScrollLimit()
-                } label: {
-                    Label("Stop Monitoring", systemImage: "stop.circle.fill")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.bordered)
-                .tint(.red)
-                .controlSize(.large)
-            }
-            
-        }
-    }
     
     private var debugSection: some View {
         VStack {
