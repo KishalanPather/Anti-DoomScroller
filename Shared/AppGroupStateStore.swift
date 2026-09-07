@@ -116,6 +116,14 @@ final class AppGroupStateStore {
                 }
         }
     
+    func getScrollLimit() -> Int {
+            return defaults.integer(forKey: Keys.scrollLimit)
+        }
+    
+    func getLockoutPeriod() -> Int {
+           return defaults.integer(forKey: Keys.lockoutPeriod)
+        }
+    
     private func syncWithAppGroup() {
         let newScrollLimit = defaults.integer(forKey: Keys.scrollLimit)
         if scrollLimit != newScrollLimit { scrollLimit = newScrollLimit }
