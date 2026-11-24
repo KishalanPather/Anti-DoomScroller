@@ -37,7 +37,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
             blockingService.stopBlocking()
             logger.notice("intervalDidEnd() callback fired, lockout period ended")
             //AppGroupStateStore.shared.appState = AppState.monitoring
-            MonitoringService.startMonitorLockoutPeriod()
+            MonitoringService.startMonitorScrollLimitWithIntervals()
             
             
         }
